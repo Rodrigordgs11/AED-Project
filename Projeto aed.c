@@ -12,7 +12,12 @@
 int main(void){
     int escolha;
     do{
-        printf("--------- Menu ---------")
+        printf("--------- Menu Principal ---------\n");
+        printf(" 1 - Gestão de Alunos\n");
+        printf(" 2 - Gestão de Instrutores\n");
+        printf(" 3 - Marcação/Consultas de Aulas\n");
+        printf(" 0 - Sair\n");
+        scanf("%d",escolha);
         
         
         
