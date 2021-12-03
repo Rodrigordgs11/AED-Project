@@ -6,3 +6,16 @@
 //
 
 #include <stdio.h>
+#include <string.h>
+
+
+int main(void){
+    int escolha;
+    do{
+        printf("--------- Menu ---------")
+        
+        
+        
+        
+    }while(escolha!=0);
+}
