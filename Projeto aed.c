@@ -27,20 +27,37 @@ int main(void) {
     system("COLOR FC");
 	
     // DECLARA??O DE VARI?VEIS E DE CONSTANTES
-	int nAlunos;
-    int nFinalAlunos;
-    int nAtualAlunos = 0; 
+    int escolhaPrincipal;
+    
+    //VARIAVEIS ALUNOS
+	int nAlunos, nFinalAlunos, nAtualAlunos = 0; 
     int numAluno[30];
+    char nomeAluno[30][30];
     char morada[30][100]; 
     char dataNascimento[30][8];
-    int cc[30][8]; 
+    int ccAluno[30][8]; 
     int nif[30][9]; 
     int dataConclusao[30];
     int numeroCarta[30];
-    int ativo[30];
+    int ativoAluno[30];
     int i;
-	int escolhaPrincipal, escolhaAlunos, escolhaInstrutores, escolhaMarcacao;
+	int escolhaAlunos;
+	int resAlunos;
+	
+	//VARIAVEIS INSTRUTORES 
+	int resInstrutores;
+	int nInstrutores, nAtualInstrutores = 0, nFinalInstrutores; 
+	int escolhaInstrutores;
+	char nomeInstrutor[10][30];
+	char ccInstrutor[10][8];
+	char emailInstrutor[10][30];
+	char anoEntrada[10][8];
+	int ativoInstrutor[10];
+	
+	//VARIAVEIS MARCAÇÃO
+	int resMarcacao;
 	char aulas[100];
+	int escolhaMarcacao;
 
     // SEQU?NCIA L?GICA DE INSTRU??ES
 
@@ -100,20 +117,118 @@ int main(void) {
     	printf("\nA fechar o programa..");
     	sleep(1);
     break;
-    default: 
-    break;
     }
+    
     switch (escolhaAlunos){   
     case 1:
 		system("clear||cls");
     	printf ("\n");
 		printf("--------- INSERIR ALUNOS ---------\n");
-    	printf ("\nIntroduza o numero de alunos que pretende inserir: ");
+    	printf ("\nIntroduza o número de alunos que pretende inserir: ");
     	scanf ("%d", &nAlunos);
     	nFinalAlunos = nAtualAlunos + nAlunos;
     		if (nFinalAlunos > 30){
-        		printf ("\nAtigiu o numero maximo de alunos");
+        		printf ("\nAtigiu o número maximo de alunos");
         		/*return ao menu*/
+    		}else{
+        		for (i = 0; i < nAlunos; i++){
+           			printf("\nIntroduza o número do aluno");
+            		scanf("%d", &numAluno[i]);
+            		printf("\nIntroduza o nome do aluno");
+            		scanf(" %30[^\n]s", nomeAluno + nAtualAlunos);
+            		printf("\nIntroduza a morada (rua, porta, código postal, localidade)");
+            		scanf(" %30[^\n]s", morada + nAtualAlunos);    
+            		printf("\nIntroduza a data de nascimento");
+            		scanf("%d", &dataNascimento[i]);
+            		printf("\nIntroduza o cartao de cidadao");
+            		scanf("%d", &ccAluno[i]);
+            		printf("\nIntroduza o NIF");
+            		scanf("%d", &nif[i]);
+            		printf("\nIntroduza a data de conclusao de carta");
+            		scanf("%d", &dataConclusao[i]);
+            		printf("\nIntroduza o numero de carta");
+            		scanf("%d", &numeroCarta[i]);
+            		printf("\nO aluno encontra-se ativo no momento\n1 - SIM\n2 - NAO");
+            		scanf("%d", &ativoAluno[i]);
+    				nAtualAlunos++;
+    			}	
+    		}       	    
+    break; 
+    case 2:
+    	printf("\n");
+    	system("clear||cls");
+    	printf("--------- LISTAGEM DE ALUNOS ---------\n");
+    		for (i = 0; i < nFinalAlunos; i++){
+    			printf ("Aluno %d", numAluno[i]);
+			}
+    break;
+    /*case 0:
+    	printf("Pretende recuar para o menu principal\n1 - Sim\n2 - Não");
+    	scanf("%d", &resAlunos);
+    	if (resAlunos == 1){
+    	return menu principal*//*
+    	}else{
+    		system("clear||cls");
+    		printf("\nA fechar o programa..");
+    		sleep(1);	
+		}
+    break;*/
+    }
+    
+    switch (escolhaInstrutores){
+    case 1:
+    	system("clear||cls");
+    	printf ("\n");
+		printf("--------- INSERIR INSTRUTORES ---------\n");
+    	printf ("\nIntroduza o numero de instrutores que pretende inserir: ");
+    	scanf ("%d", &nInstrutores);
+    	nFinalInstrutores = nAtualInstrutores + nInstrutores;
+    		if (nFinalInstrutores > 10){
+        		printf ("\nAtigiu o numero maximo de instrutores");
+        		/*return ao menu*/
+    		}else{
+        		for (i = 0; i < nInstrutores; i++){
+            		printf("\nIntroduza o nome do instrutor");
+            		scanf(" %10[^\n]s", nomeInstrutor + nAtualInstrutores);
+            		printf("\nIntroduza número do cartão de cidadão");
+            		scanf(" %10[^\n]s", ccInstrutor + nAtualInstrutores);    
+            		printf("\nIntroduza o email");
+            		scanf(" %10[^\n]s", emailInstrutor + nAtualInstrutores);
+            		printf("\nIntroduza o ano de entrada na escola de condução");
+            		scanf(" %10[^\n]s", anoEntrada + nAtualInstrutores);
+            		printf("\nO instrutor encontra-se ativo no momento\n1 - SIM\n2 - NAO");
+            		scanf("%d", &ativoInstrutor[i]);
+    				nAtualInstrutores++;
+    			}	
+    		}       
+    break;
+    case 2:
+    //listar instrutores
+    
+    break;
+    /*case 0:
+    	printf("Pretende recuar para o menu principal\n1 - Sim\n2 - Não");
+    	scanf("%d", &resInstrutores);
+    	if (resAlunos == 1){
+    	return menu principal*//*
+    	}else{
+    		system("clear||cls");
+    		printf("\nA fechar o programa..");
+    		sleep(1);	
+		}
+    break;*/
+	}
+	switch (escolhaMarcacao){
+    /*case 1:
+    	system("clear||cls");
+    	printf ("\n");
+		printf("--------- INSERIR MARCAÇÕES ---------\n");
+    	printf ("\nIntroduza o numero de instrutores que pretende inserir: ");
+    	scanf ("%d", &nInstrutores);
+    	nFinalInstrutores = nAtualInstrutores + nInstrutores;
+    		if (nFinalAlunos > 30){
+        		printf ("\nAtigiu o numero maximo de alunos");
+        		return ao menu*//*
     		}else{
         		for (i = 0; i < nAlunos; i++){
            			printf("\nIntroduza o numero de aluno");
@@ -134,25 +249,23 @@ int main(void) {
             		scanf("%d", &ativo[i]);
     				nAtualAlunos++;
     			}	
-    		}       	    
-    break; 
+    		}       
+    break;
     case 2:
-    	printf("\n");
-    	system("clear||cls");
-    	printf("--------- LISTAGEM DE ALUNOS ---------\n");
-    		for (i = 0; i < nFinalAlunos; i++){
-    			printf ("Aluno %d", numAluno[i]);
-			}
+    //listar MARCAçÕES
     break;
     /*case 0:
     	printf("Pretende recuar para o menu principal\n1 - Sim\n2 - Não");
-    	scanf("%d",  &);
-    	if ( == 1){
-	   	system("clear||cls");
-    	printf("\nA fechar o programa..");
-    	sleep(2);
+    	scanf("%d", &resMarcacao);
+    	if (resAlunos == 1){
+    	return menu principal*//*
+    	}else{
+    		system("clear||cls");
+    		printf("\nA fechar o programa..");
+    		sleep(1);	
+		}
     break;*/
-    }
+	}
     printf("\n\n");
 }
 /*--------------------------------------------------*/
