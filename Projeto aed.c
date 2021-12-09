@@ -18,10 +18,17 @@
 /*@@@@ VARI?VEIS GLOBAIS                        @@@@*/
 
 /*@@@@ ESTRUTURAS                               @@@@*/
+ typedef struct morada{
+       	
+	   };
+      
 typedef struct Aluno{
        //VARIAVEIS ALUNOS
        int numAluno;
        char nomeAluno[30][30];
+       typedef struct morada{
+       	
+	   };
        char morada[30][100];
        char dataNascimento[30][8];
        int ccAluno;
