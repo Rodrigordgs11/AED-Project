@@ -1,3 +1,4 @@
+	  
 /*--------------------------------------------------*/
 /*####             PROGRAMA??O EM C             ####*/
 /*--------------------------------------------------*/
@@ -59,8 +60,10 @@ int main(void) {
 	char aulas[100];
 	int escolhaMarcacao;
 
-    // SEQU?NCIA L?GICA DE INSTRU??ES
-
+    // SEQU?NCIA L?GICA DE INSTRU??ES      
+    do{
+    	
+	
     printf("\n");
     do{
         printf("--------- Menu Principal ---------\n");
@@ -121,6 +124,7 @@ int main(void) {
     
     switch (escolhaAlunos){   
     case 1:
+    	do{
 		system("clear||cls");
     	printf ("\n");
 		printf("--------- INSERIR ALUNOS ---------\n");
@@ -152,7 +156,8 @@ int main(void) {
             		scanf("%d", &ativoAluno[i]);
     				nAtualAlunos++;
     			}	
-    		}       	    
+    		}
+		}while(escolhaAlunos < 0 || escolhaInstrutores > 3);	       	    
     break; 
     case 2:
     	printf("\n");
@@ -267,5 +272,6 @@ int main(void) {
     break;*/
 	}
     printf("\n\n");
+    }while(escolhaPrincipal != 0);
 }
 /*--------------------------------------------------*/
