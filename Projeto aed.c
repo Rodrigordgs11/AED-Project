@@ -51,6 +51,7 @@ void subMenu1_esc2();
 void subMenu2_esc1();
 void subMenu2_esc2();
 void subMenu3_esc1();
+void subMenu3_esc2();
 
 /* variaveis*/
 // DECLARA??O DE VARI?VEIS E DE CONSTANTES
