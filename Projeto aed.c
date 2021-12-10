@@ -243,31 +243,31 @@ void subMenu1_esc1(){
             /*return ao menu*/
         }else{
             for (i = 0; i < nAlunos; i++){
-                printf("\nIntroduza o número do aluno");
+                printf("\nIntroduza o número do aluno: ");
                 scanf("%d", &aluno_x[i].numAluno);
-                printf("\nIntroduza o nome do aluno");
+                printf("\nIntroduza o nome do aluno: ");
                 scanf(" %30[^\n]s", aluno_x[i].nomeAluno + nAtualAlunos);
-                printf("\nIntroduza a morada (rua, porta, código postal, localidade)");
+                printf("\nIntroduza a morada (rua, porta, código postal, localidade): ");
                 //scanf(" %30[^\n]s", aluno_x[30].morada + nAtualAlunos);
-                printf("\nIntroduza a rua");
+                printf("\nIntroduza a rua: ");
                 scanf(" %30[^\n]s", rua + nAtualAlunos);
-                printf("\nIntroduza a porta");
+                printf("\nIntroduza a porta: ");
                 scanf(" %30[^\n]s", porta + nAtualAlunos);
-                printf("\nIntroduza a código postal");
+                printf("\nIntroduza a código postal: ");
                 scanf(" %30[^\n]s", codigoPostal + nAtualAlunos);
-                printf("\nIntroduza a localidade");
+                printf("\nIntroduza a localidade: ");
                 scanf(" %30[^\n]s", localidade + nAtualAlunos);
-                printf("\nIntroduza a data de nascimento");
+                printf("\nIntroduza a data de nascimento: ");
                 scanf(" %30[^\n]s", &aluno_x[i].dataNascimento + nAtualAlunos);
-                printf("\nIntroduza o cartao de cidadao");
+                printf("\nIntroduza o cartao de cidadao: ");
                 scanf("%d", &aluno_x[i].ccAluno);
-                printf("\nIntroduza o NIF");
+                printf("\nIntroduza o NIF: ");
                 scanf("%d", &aluno_x[i].nif);
-                printf("\nIntroduza a data de conclusao de carta");
+                printf("\nIntroduza a data de conclusao de carta: ");
                 scanf(" %30[^\n]s", &aluno_x[i].dataConclusao + nAtualAlunos);
-                printf("\nIntroduza o numero de carta");
+                printf("\nIntroduza o numero de carta: ");
                 scanf("%d", &aluno_x[i].numeroCarta);
-                printf("\nO aluno encontra-se ativo no momento\n1 - SIM\n2 - NAO");
+                printf("\nO aluno encontra-se ativo no momento\n1 - SIM\n2 - NAO\nR:. ");
                 scanf("%d", &aluno_x[i].ativoAluno);
                 nAtualAlunos++;
             }
@@ -309,16 +309,16 @@ void subMenu2_esc1(){
             /*return ao menu*/
         }else{
             for (i = 0; i < nInstrutores; i++){
-                printf("\nIntroduza o nome do instrutor");
-                scanf(" %10[^\n]s", instrutores_x[10].nomeInstrutor + nAtualInstrutores);
-                printf("\nIntroduza número do cartão de cidadão");
-                scanf(" %10[^\n]s", instrutores_x[10].ccInstrutor + nAtualInstrutores);
-                printf("\nIntroduza o email");
-                scanf(" %10[^\n]s", instrutores_x[10].emailInstrutor + nAtualInstrutores);
-                printf("\nIntroduza o ano de entrada na escola de condução");
-                scanf(" %10[^\n]s", instrutores_x[10].anoEntrada + nAtualInstrutores);
-                printf("\nO instrutor encontra-se ativo no momento\n1 - SIM\n2 - NAO");
-                scanf("%d", &instrutores_x[10].ativoInstrutor);
+                printf("\nIntroduza o nome do instrutor: ");
+                scanf(" %10[^\n]s", instrutores_x[i].nomeInstrutor + nAtualInstrutores);
+                printf("\nIntroduza número do cartão de cidadão: ");
+                scanf(" %10[^\n]s", instrutores_x[i].ccInstrutor + nAtualInstrutores);
+                printf("\nIntroduza o email: ");
+                scanf(" %10[^\n]s", instrutores_x[i].emailInstrutor + nAtualInstrutores);
+                printf("\nIntroduza o ano de entrada na escola de condução: ");
+                scanf(" %10[^\n]s", instrutores_x[i].anoEntrada + nAtualInstrutores);
+                printf("\nO instrutor encontra-se ativo no momento\n1 - SIM\n2 - NAO\nR:. ");
+                scanf("%d", &instrutores_x[i].ativoInstrutor);
                 nAtualInstrutores++;
             }
         }
@@ -326,7 +326,7 @@ void subMenu2_esc1(){
 
 void subMenu2_esc2(){
     for (i = 0; i < nFinalInstrutores; i++){
-        printf("\nIntroduza o nome do instrutor %s", instrutores_x[10].nomeInstrutor);
+        printf("\nIntroduza o nome do instrutor %s", instrutores_x[i].nomeInstrutor);
     }
 }
 
