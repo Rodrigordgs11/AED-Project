@@ -1,62 +1,67 @@
 #include <stdio.h>
 #include <time.h>
-#define MAX_YR  9999
-#define MIN_YR  1900
+#define MAX_ANO  9999
+#define MIN_ANO  1900
 
 //structure to store date
-typedef struct Date{
-    int yyyy;
+typedef struct Data{
+    int aaaa;
     int mm;
     int dd;
-} Date;
+} Data;
 
-// Function to check leap year.
-//Function returns 1 if leap year
-
-int  IsLeapYear(int year){
-    return (((year % 4 == 0) &&
-             (year % 100 != 0)) ||
-            (year % 400 == 0));
+int  anoBissexto(int ano){
+    return (((ano % 4 == 0) &&     //é ano bissexto quando o ano for divisor por 4 ou 400 e o resto for 0 e retornar 1 
+             (ano % 100 != 0)) ||
+            (ano % 400 == 0));
 }
-// returns 1 if given date is valid.
-int isValidDate(Date *validDate){
-    //check range of year,month and day
+
+int dataValida(Data *validarData){
     
-    if (validDate->yyyy > MAX_YR ||
-            validDate->yyyy < MIN_YR)
+    if (validarData->aaaa > MAX_ANO ||		//ano tem de ser maior que 1900 e menor que 9999
+            validarData->aaaa < MIN_ANO)
         return 0;
-    if (validDate->mm < 1 || validDate->mm > 12)
+    if (validarData->mm < 1 || validarData->mm > 12)	//mes maior que 1 e menor que 12
         return 0;
-    if (validDate->dd < 1 || validDate->dd > 31)
+    if (validarData->dd < 1 || validarData->dd > 31)	//dia mais que 1 e menor que 31
         return 0;
         
-    //Handle feb days in leap year
-    if (validDate->mm == 2){
-        if (IsLeapYear(validDate->yyyy))
-            return (validDate->dd <= 29);
+    if (validarData->mm == 2){
+        if (anoBissexto(validarData->aaaa))
+            return (validarData->dd <= 29);	//se for ano bissexto fevereiro tem 29 dias
         else
-            return (validDate->dd <= 28);
+            return (validarData->dd <= 28); 	//senao tem 28 dias
     }
-    //handle months which has only 30 days
-    if (validDate->mm == 4 || validDate->mm == 6 ||
-            validDate->mm == 9 || validDate->mm == 11)
-        return (validDate->dd <= 30);
+    
+    if (validarData->mm == 4 || validarData->mm == 6 ||		//os meses 4,6,9,11 só têm 30 dias
+        validarData->mm == 9 || validarData->mm == 11)
+        return (validarData->dd <= 30);
     return 1;
 }
 int main(void){
-	
-    Date getDate = {0}; //variable to store date
-    int status = 0; //variable to check status
-    //get date year,month and day from user
-    printf("\n\n Enter date in format (day/month/year): ");
-    scanf("%d/%d/%d",&getDate.dd,&getDate.mm,&getDate.yyyy);
-    //check date validity
-    status = isValidDate(&getDate);
-    if(status !=1){
-        printf("\n\n Please enter a valid date!\n");
-    }
-    else{
-        printf("\n %d/%d/%d", getDate.dd, getDate.mm, getDate.yyyy);
-    }
+		
+	Data data[30]; 		//variavel para guardar data
+    int estado = 0; 
+	int i;				//estado inicia com 0
+    
+	do{
+		for (i = 0; i < 2; i++){
+			printf("\n\n Insira a data no formato neste (dd/mm/yyyy): ");
+    		scanf("%d/%d/%d",&data[i].dd,&data[i].mm,&data[i].aaaa);
+    		estado = dataValida(&data); 	//verifica se a data é válida
+    		
+    		if(estado != 1){				//se for diferente de 1
+        		printf("\nPor favor insira uma data válida!\n");
+    		}else{							//senao guarda os dados inseridos
+    			printf("\nData valida!\n");
+        		printf("\n %d/%d/%d\n", data[i].dd, data[i].mm, data[i].aaaa);
+    		}	
+		}
+		
+		for (i = 0; i < 2; i++){
+			printf("\n %d/%d/%d", data[i].dd, data[i].mm, data[i].aaaa);
+		}		    	
+	}while(estado != 1);
+   	   
     return 0;
 }
