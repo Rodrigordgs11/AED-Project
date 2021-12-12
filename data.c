@@ -28,7 +28,7 @@ int dataValida(Data *validarData){
         
     if (validarData->mm == 2){
         if (anoBissexto(validarData->aaaa))
-            return (validarData->dd <= 29);	//se for ano bissexto fevereiro tem 29 dias
+            return (validarData->dd <= 29);		//se for ano bissexto fevereiro tem 29 dias
         else
             return (validarData->dd <= 28); 	//senao tem 28 dias
     }
@@ -41,8 +41,8 @@ int dataValida(Data *validarData){
 int main(void){
 		
 	Data data[30]; 		//variavel para guardar data
-    int estado = 0; 
-	int i;				//estado inicia com 0
+    int estado = 0; 	//estado inicia com 0
+	int i;				
     
 	do{
 		for (i = 0; i < 2; i++){
