@@ -280,7 +280,7 @@ void subMenu1_esc2(){
     system("clear||cls");
     printf("--------- LISTAGEM DE ALUNOS ---------\n");
         for (i = 0; i < nFinalAlunos; i++){
-            printf ("\nNumero alunos %d", nFinalAlunos);
+            //printf ("\nNumero alunos %d", nFinalAlunos);
             printf ("\nAluno: %d", aluno_x[i].numAluno);
             printf ("\nNome: %s", aluno_x[i].nomeAluno);
             printf ("\nData Nascimento: %s", aluno_x[i].dataNascimento);
@@ -338,8 +338,7 @@ void subMenu3_esc1(){
     printf ("\n");
     printf("-------- Tabela Instrutores --------\n\nNome\t\tEmail");
     printf("%s\t\t%s",instrutores_x[i].nomeInstrutor,instrutores_x[i].emailInstrutor);
-    
-    
+ 	  
 }
 
 void subMenu3_esc2(){
