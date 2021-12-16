@@ -10,13 +10,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <locale.h>
 
-/*@@@@ DIRECTIVAS DE DEFIN??O                   @@@@*/
-
-/*@@@@ VARI?VEIS GLOBAIS                        @@@@*/
-
-/*@@@@ ESTRUTURAS                               @@@@*/
 typedef struct Aluno{
        //VARIAVEIS ALUNOS
        int numAluno;
@@ -107,80 +103,78 @@ void menu(){
     switch (escolhaPrincipal){
     case 1:
             subMenu1();
+            switch (escolhaAlunos){
+            case 1:
+                    subMenu1_esc1();
+            break;
+            case 2:
+                    subMenu1_esc2();
+            break;
+            /*case 0:
+                printf("Pretende recuar para o menu principal\n1 - Sim\n2 - Não");
+                scanf("%d", &resAlunos);
+                if (resAlunos == 1){
+                return menu principal*//*
+                }else{
+                    system("clear||cls");
+                    printf("\nA fechar o programa..");
+                    sleep(1);
+                }
+            break;*/
+            }
     break;
     case 2:
             subMenu2();
+            switch (escolhaInstrutores){
+            case 1:
+                    subMenu2_esc1();
+            break;
+            case 2:
+            //listar instrutores
+                    subMenu2_esc2();
+            
+            break;
+            /*case 0:
+                printf("Pretende recuar para o menu principal\n1 - Sim\n2 - Não");
+                scanf("%d", &resInstrutores);
+                if (resAlunos == 1){
+                return menu principal*//*
+                }else{
+                    system("clear||cls");
+                    printf("\nA fechar o programa..");
+                    sleep(1);
+                }
+            break;*/
+            }
     break;
     case 3:
             subMenu3();
+            switch (escolhaMarcacao){
+            case 1:
+                    subMenu3_esc1();
+            break;
+            case 2:
+            //listar MARCAçÕES
+                    subMenu3_esc2();
+            break;
+            /*case 0:
+                printf("Pretende recuar para o menu principal\n1 - Sim\n2 - Não");
+                scanf("%d", &resMarcacao);
+                if (resAlunos == 1){
+                return menu principal*//*
+                }else{
+                    system("clear||cls");
+                    printf("\nA fechar o programa..");
+                    sleep(1);
+                }
+            break;*/
+            }
     break;
     case 0:
             system("clear||cls");
             printf("\nA fechar o programa..");
             sleep(1);
     break;
-    }
-    
-    switch (escolhaAlunos){
-    case 1:
-            subMenu1_esc1();
-    break;
-    case 2:
-            subMenu1_esc2();
-    break;
-    /*case 0:
-        printf("Pretende recuar para o menu principal\n1 - Sim\n2 - Não");
-        scanf("%d", &resAlunos);
-        if (resAlunos == 1){
-        return menu principal*//*
-        }else{
-            system("clear||cls");
-            printf("\nA fechar o programa..");
-            sleep(1);
-        }
-    break;*/
-    }
-    
-    switch (escolhaInstrutores){
-    case 1:
-            subMenu2_esc1();
-    break;
-    case 2:
-    //listar instrutores
-            subMenu2_esc2();
-    
-    break;
-    /*case 0:
-        printf("Pretende recuar para o menu principal\n1 - Sim\n2 - Não");
-        scanf("%d", &resInstrutores);
-        if (resAlunos == 1){
-        return menu principal*//*
-        }else{
-            system("clear||cls");
-            printf("\nA fechar o programa..");
-            sleep(1);
-        }
-    break;*/
-    }
-    switch (escolhaMarcacao){
-    case 1:
-            subMenu3_esc1();
-    break;
-    case 2:
-    //listar MARCAçÕES
-            subMenu3_esc2();
-    break;
-    /*case 0:
-        printf("Pretende recuar para o menu principal\n1 - Sim\n2 - Não");
-        scanf("%d", &resMarcacao);
-        if (resAlunos == 1){
-        return menu principal*//*
-        }else{
-            system("clear||cls");
-            printf("\nA fechar o programa..");
-            sleep(1);
-        }
-    break;*/
     }
     printf("\n\n");
     }while(escolhaPrincipal != 0);
@@ -271,7 +265,6 @@ void subMenu1_esc1(){
                 printf("\n\n");
             }
         }
-        escolhaAlunos=NULL;
 }
 
 
@@ -280,7 +273,7 @@ void subMenu1_esc2(){
     system("clear||cls");
     printf("--------- LISTAGEM DE ALUNOS ---------\n");
         for (i = 0; i < nFinalAlunos; i++){
-            //printf ("\nNumero alunos %d", nFinalAlunos);
+            printf ("\nNumero alunos %d", nFinalAlunos);
             printf ("\nAluno: %d", aluno_x[i].numAluno);
             printf ("\nNome: %s", aluno_x[i].nomeAluno);
             printf ("\nData Nascimento: %s", aluno_x[i].dataNascimento);
@@ -292,7 +285,6 @@ void subMenu1_esc2(){
             printf("\nMorada: %s,%s,%s,%s",rua[i],porta[i],codigoPostal[i],localidade[i]);
             printf("\n\n");
         } 
-        escolhaAlunos=NULL;
 }
 
 void subMenu2_esc1(){
@@ -321,7 +313,6 @@ void subMenu2_esc1(){
                 printf("\n\n");
             }
         }
-        escolhaInstrutores=NULL;
 }
 
 void subMenu2_esc2(){
@@ -333,7 +324,6 @@ void subMenu2_esc2(){
         printf("\nAtivo: %d",instrutores_x[i].ativoInstrutor);
         printf("\n\n");
     }
-    escolhaInstrutores=NULL;
 }
 
 void subMenu3_esc1(){
@@ -341,7 +331,8 @@ void subMenu3_esc1(){
     printf ("\n");
     printf("-------- Tabela Instrutores --------\n\nNome\t\tEmail");
     printf("%s\t\t%s",instrutores_x[i].nomeInstrutor,instrutores_x[i].emailInstrutor);
- 	  
+    
+    
 }
 
 void subMenu3_esc2(){
