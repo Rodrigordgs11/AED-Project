@@ -7,6 +7,13 @@
 /*--------------------------------------------------*/
 /*@@@@ DIRECTIVAS DE INCLUS?O                   @@@@*/
 
+//
+//  projeto.c
+//  aulas algoritmia
+//
+//  Created by Rúben José rodrigues Vicente on 06/12/2021.
+//
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,6 +40,7 @@ typedef struct Aluno{
    } Aluno;
    
     typedef struct Instrutores{
+        int numInstrutor;
        char nomeInstrutor[10][30];
        char ccInstrutor[10][9];
        char emailInstrutor[10][30];
@@ -68,7 +76,7 @@ int escolhaPrincipal;
 int resInstrutores;
 int nInstrutores, nAtualInstrutores = 0, nFinalInstrutores;
 int escolhaInstrutores;
-int i;
+int i,j;
 int resAlunos;
 //VARIAVEIS MARCAÇÃO
 int resMarcacao;
@@ -308,6 +316,7 @@ void subMenu2_esc1(){
                 printf("\nO instrutor encontra-se ativo no momento\n1 - SIM\n2 - NAO\nR:. ");
                 scanf("%d", &instrutores_x[i].ativoInstrutor);
                 nAtualInstrutores++;
+                instrutores_x[i].numInstrutor=nAtualInstrutores;
                 printf("\n\n");
             }
         }
@@ -327,9 +336,14 @@ void subMenu2_esc2(){
 void subMenu3_esc1(){
     system("clear||cls");
     printf ("\n");
-    printf("-------- Tabela Instrutores --------\n\nNome\t\tEmail");
-    printf("%s\t\t%s",instrutores_x[i].nomeInstrutor,instrutores_x[i].emailInstrutor);
-    
+    printf("-------- Tabela Instrutores --------\n\nnº Instrutor\tNome\t\t\t\tEmail");
+    for(i=0; i < nFinalInstrutores;i++){
+    printf("\n%d\t\t\t\t%s\t\t%s\n",instrutores_x[i].numInstrutor,instrutores_x[i].nomeInstrutor,instrutores_x[i].emailInstrutor);
+    }
+    printf("-------- Tabela Alunos --------\n\nnºAluno\t\tNome\t\t\t\tCartao de cidadao");
+    for(i=0; i < nFinalAlunos;i++){
+    printf("\n%d\t\t\t%s\t\t\t%d\n",aluno_x[i].numAluno,aluno_x[i].nomeAluno,aluno_x[i].ccAluno);
+    }
     
 }
 
