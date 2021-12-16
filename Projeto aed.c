@@ -68,7 +68,7 @@ int escolhaPrincipal;
 int resInstrutores;
 int nInstrutores, nAtualInstrutores = 0, nFinalInstrutores;
 int escolhaInstrutores;
-int i;
+int i,j;
 int resAlunos;
 //VARIAVEIS MARCAÇÃO
 int resMarcacao;
@@ -235,8 +235,6 @@ void subMenu1_esc1(){
             /*return ao menu*/
         }else{
             for (i = 0; i < nAlunos; i++){
-                printf("\nIntroduza o número do aluno: ");
-                scanf("%d", &aluno_x[i].numAluno);
                 printf("\nIntroduza o nome do aluno: ");
                 scanf(" %30[^\n]s", &aluno_x[i].nomeAluno);
                 printf("\nIntroduza a morada (rua, porta, código postal, localidade): ");
@@ -262,6 +260,7 @@ void subMenu1_esc1(){
                 printf("\nO aluno encontra-se ativo no momento\n1 - SIM\n2 - NAO\nR:. ");
                 scanf("%d", &aluno_x[i].ativoAluno);
                 nAtualAlunos++;
+                aluno_x[i].numAluno=nAtualAlunos;
                 printf("\n\n");
             }
         }
@@ -273,7 +272,6 @@ void subMenu1_esc2(){
     system("clear||cls");
     printf("--------- LISTAGEM DE ALUNOS ---------\n");
         for (i = 0; i < nFinalAlunos; i++){
-            printf ("\nNumero alunos %d", nFinalAlunos);
             printf ("\nAluno: %d", aluno_x[i].numAluno);
             printf ("\nNome: %s", aluno_x[i].nomeAluno);
             printf ("\nData Nascimento: %s", aluno_x[i].dataNascimento);
