@@ -54,21 +54,23 @@ Instrutores instrutores_x[10];
 /*@@@@ FUN??ES E PROCEDIMENTOS                  @@@@*/
 
 void menu();
-void subMenu1();
-void subMenu2();
-void subMenu3();
-void subMenu1_esc1();
-void subMenu1_esc2();
-void subMenu2_esc1();
-void subMenu2_esc2();
-void subMenu3_esc1();
+void MenuAlunos();
+void MenuInstrutores();
+void MenuConsulta();
+void InserirAlunos();
+void DadosAlunos();
+void InserirInstrutores();
+void DadosInstrutores();
+void MarcacaoAula();
 void subMenu3_esc2();
+void limpaEcra();
 
 /* variaveis*/
 char rua[30][30];
 char porta[30][30];
 char codigoPostal[30][30];
 char localidade[30][30];
+int flag = 0;
 
 // DECLARA??O DE VARI?VEIS E DE CONSTANTES
 int escolhaPrincipal;
@@ -110,13 +112,16 @@ void menu(){
     
     switch (escolhaPrincipal){
     case 1:
-            subMenu1();
+			limpaEcra();    	
+            MenuAlunos();
             switch (escolhaAlunos){
             case 1:
-                    subMenu1_esc1();
+            	limpaEcra();
+                InserirAlunos();               
             break;
             case 2:
-                    subMenu1_esc2();
+            	limpaEcra();
+                DadosAlunos();
             break;
             /*case 0:
                 printf("Pretende recuar para o menu principal\n1 - Sim\n2 - Não");
@@ -132,14 +137,16 @@ void menu(){
             }
     break;
     case 2:
-            subMenu2();
+    		limpaEcra();
+            MenuInstrutores();
             switch (escolhaInstrutores){
             case 1:
-                    subMenu2_esc1();
+            	limpaEcra();
+                    InserirInstrutores();
             break;
             case 2:
             //listar instrutores
-                    subMenu2_esc2();
+	            DadosInstrutores();
             
             break;
             /*case 0:
@@ -156,14 +163,16 @@ void menu(){
             }
     break;
     case 3:
-            subMenu3();
+    		limpaEcra();
+            MenuConsulta();
             switch (escolhaMarcacao){
             case 1:
-                    subMenu3_esc1();
+                    MarcacaoAula();
             break;
             case 2:
             //listar MARCAçÕES
-                    subMenu3_esc2();
+            	limpaEcra();
+                subMenu3_esc2();
             break;
             /*case 0:
                 printf("Pretende recuar para o menu principal\n1 - Sim\n2 - Não");
@@ -179,9 +188,8 @@ void menu(){
             }
     break;
     case 0:
-            system("clear||cls");
-            printf("\nA fechar o programa..");
-            sleep(1);
+        limpaEcra();
+        sleep(1);
     break;
     }
     printf("\n\n");
@@ -189,11 +197,9 @@ void menu(){
 }
 
 
-void subMenu1(){
+void MenuAlunos(){
     do{
-        system("clear||cls");
-        printf ("\n");
-        printf("--------- Gestão de Alunos ---------\n");
+       printf("--------- Gestão de Alunos ---------\n");
         printf(" 1 - Inserir Alunos\n");
         printf(" 2 - Listagem Alunos\n");
         /*printf(" 3 - Marcação/Consultas de Aulas\n");*/
@@ -203,10 +209,8 @@ void subMenu1(){
     }while(escolhaAlunos < 0 || escolhaAlunos > 3);
 }
 
-void subMenu2(){
+void MenuInstrutores(){
     do{
-        printf ("\n");
-        system("clear||cls");
         printf("--------- Gestão de Instrutores ---------\n");
         printf(" 1 - Inserir Instrutores\n");
         printf(" 2 - Listagem Instrutores\n");
@@ -217,10 +221,8 @@ void subMenu2(){
     }while(escolhaInstrutores < 0 || escolhaInstrutores > 3);
 }
 
-void subMenu3(){
+void MenuConsulta(){
     do{
-        printf ("\n");
-        system("clear||cls");
         printf("--------- Marcação/Consultas de Aulas ---------\n");
         printf(" 1 - Inserir Marcação\n");
         printf(" 2 - Listagem Marcação\n");
@@ -231,9 +233,7 @@ void subMenu3(){
     }while(escolhaMarcacao < 0 || escolhaMarcacao > 3);
 }
 
-void subMenu1_esc1(){
-    system("clear||cls");
-    printf ("\n");
+void InserirAlunos(){
     printf("--------- INSERIR ALUNOS ---------\n");
     printf ("\nIntroduza o número de alunos que pretende inserir: ");
     scanf ("%d", &nAlunos);
@@ -243,6 +243,8 @@ void subMenu1_esc1(){
             /*return ao menu*/
         }else{
             for (i = 0; i < nAlunos; i++){
+            	limpaEcra();
+        		printf("--------- INSERIR ALUNOS ---------\n");
                 printf("\nIntroduza o nome do aluno: ");
                 scanf(" %30[^\n]s", &aluno_x[i].nomeAluno);
                 printf("\nIntroduza a morada (rua, porta, código postal, localidade): ");
@@ -259,6 +261,16 @@ void subMenu1_esc1(){
                 scanf(" %30[^\n]s", &aluno_x[i].dataNascimento);
                 printf("\nIntroduza o cartao de cidadao: ");
                 scanf("%d", &aluno_x[i].ccAluno);
+                /*for (i = 0; i < nFinalAlunos; i++){
+                	if (aluno_x[nFinalAlunos].ccAluno == aluno_x[i].ccAluno) flag = 1;
+                	if (flag == 1){
+                		do{
+                			printf("\nJá existe um aluno com o número cartão de cidadão introduzido! \nInsira outro número cartão de cidadão");
+							scanf("%d", &aluno_x[i].ccAluno);	
+						}while(aluno_x[i].ccAluno == aluno_x[nFinalAlunos].ccAluno);
+					}
+					flag = 0;
+				}*/
                 printf("\nIntroduza o NIF: ");
                 scanf("%d", &aluno_x[i].nif);
                 printf("\nIntroduza a data de conclusao de carta: ");
@@ -268,19 +280,20 @@ void subMenu1_esc1(){
                 printf("\nO aluno encontra-se ativo no momento\n1 - SIM\n2 - NAO\nR:. ");
                 scanf("%d", &aluno_x[i].ativoAluno);
                 nAtualAlunos++;
-                aluno_x[i].numAluno=nAtualAlunos;
-                printf("\n\n");
+                aluno_x[i].numAluno = nAtualAlunos;
+                limpaEcra();
+                printf("Aluno inserido com sucesso..");
+                sleep(2);
+                limpaEcra();
             }
         }
 }
 
-
-void subMenu1_esc2(){
-    printf("\n");
-    system("clear||cls");
-    printf("--------- LISTAGEM DE ALUNOS ---------\n");
+void DadosAlunos(){
+    printf("--------- LISTAGEM DE ALUNOS ---------\n\n");
         for (i = 0; i < nFinalAlunos; i++){
-            printf ("\nAluno: %d", aluno_x[i].numAluno);
+        	printf("--------- ALUNO NÚMERO[%d] ---------\n", aluno_x[i].numAluno);
+            //printf ("\nAluno: %d", aluno_x[i].numAluno);
             printf ("\nNome: %s", aluno_x[i].nomeAluno);
             printf ("\nData Nascimento: %s", aluno_x[i].dataNascimento);
             printf ("\nCC: %d", aluno_x[i].ccAluno);
@@ -293,9 +306,7 @@ void subMenu1_esc2(){
         } 
 }
 
-void subMenu2_esc1(){
-    system("clear||cls");
-    printf ("\n");
+void InserirInstrutores(){
     printf("--------- INSERIR INSTRUTORES ---------\n");
     printf ("\nIntroduza o numero de instrutores que pretende inserir: ");
     scanf ("%d", &nInstrutores);
@@ -305,6 +316,8 @@ void subMenu2_esc1(){
             /*return ao menu*/
         }else{
             for (i = 0; i < nInstrutores; i++){
+            	limpaEcra();
+            	printf("--------- INSERIR INSTRUTOR ---------\n");
                 printf("\nIntroduza o nome do instrutor: ");
                 scanf(" %30[^\n]s", instrutores_x[i].nomeInstrutor);
                 printf("\nIntroduza número do cartão de cidadão: ");
@@ -318,11 +331,15 @@ void subMenu2_esc1(){
                 nAtualInstrutores++;
                 instrutores_x[i].numInstrutor=nAtualInstrutores;
                 printf("\n\n");
+                limpaEcra();
+                printf("\nInstrutor inserido com sucesso..");
+                sleep(2);
+                limpaEcra();
             }
         }
 }
 
-void subMenu2_esc2(){
+void DadosInstrutores(){
     for (i = 0; i < nFinalInstrutores; i++){
         printf("\nInstrutor: %s", instrutores_x[i].nomeInstrutor);
         printf("\nCartão de cidadão: %s",instrutores_x[i].ccInstrutor);
@@ -333,9 +350,8 @@ void subMenu2_esc2(){
     }
 }
 
-void subMenu3_esc1(){
-    system("clear||cls");
-    printf ("\n");
+void MarcacaoAula(){
+
     printf("-------- Tabela Instrutores --------\n\nnº Instrutor\tNome\t\t\t\tEmail");
     for(i=0; i < nFinalInstrutores;i++){
     printf("\n%d\t\t\t\t%s\t\t%s\n",instrutores_x[i].numInstrutor,instrutores_x[i].nomeInstrutor,instrutores_x[i].emailInstrutor);
@@ -353,3 +369,7 @@ void subMenu3_esc2(){
     
 }
 
+void limpaEcra(){
+	system("clear||cls");
+    printf ("\n");
+}
