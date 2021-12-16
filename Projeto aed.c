@@ -342,11 +342,14 @@ void subMenu3_esc1(){
     }
     printf("-------- Tabela Alunos --------\n\nnºAluno\t\tNome\t\t\t\tCartao de cidadao");
     for(i=0; i < nFinalAlunos;i++){
+        if (aluno_x[i].ativoAluno==1) {
     printf("\n%d\t\t\t%s\t\t\t%d\n",aluno_x[i].numAluno,aluno_x[i].nomeAluno,aluno_x[i].ccAluno);
-    }
     
+    }
+    }
 }
 
 void subMenu3_esc2(){
     
 }
+
