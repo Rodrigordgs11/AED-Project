@@ -68,7 +68,7 @@ int escolhaPrincipal;
 int resInstrutores;
 int nInstrutores, nAtualInstrutores = 0, nFinalInstrutores;
 int escolhaInstrutores;
-int i,j;
+int i;
 int resAlunos;
 //VARIAVEIS MARCAÇÃO
 int resMarcacao;
