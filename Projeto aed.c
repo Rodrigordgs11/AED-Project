@@ -1,4 +1,3 @@
-	  
 /*--------------------------------------------------*/
 /*####             PROGRAMA??O EM C             ####*/
 /*--------------------------------------------------*/
@@ -272,6 +271,7 @@ void subMenu1_esc1(){
                 printf("\n\n");
             }
         }
+        escolhaAlunos=NULL;
 }
 
 
@@ -292,6 +292,7 @@ void subMenu1_esc2(){
             printf("\nMorada: %s,%s,%s,%s",rua[i],porta[i],codigoPostal[i],localidade[i]);
             printf("\n\n");
         } 
+        escolhaAlunos=NULL;
 }
 
 void subMenu2_esc1(){
@@ -320,6 +321,7 @@ void subMenu2_esc1(){
                 printf("\n\n");
             }
         }
+        escolhaInstrutores=NULL;
 }
 
 void subMenu2_esc2(){
@@ -331,6 +333,7 @@ void subMenu2_esc2(){
         printf("\nAtivo: %d",instrutores_x[i].ativoInstrutor);
         printf("\n\n");
     }
+    escolhaInstrutores=NULL;
 }
 
 void subMenu3_esc1(){
