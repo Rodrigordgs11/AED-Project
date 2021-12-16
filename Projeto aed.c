@@ -13,6 +13,7 @@
 //
 //  Created by Rúben José rodrigues Vicente on 06/12/2021.
 //
+//EM FALTA, MUDAR DATAS NO SCANF, STRUCT MORADA DENTRO DO ALUNO, NUMERO ALUNO AUTOMATICO, 
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -239,8 +240,8 @@ void InserirAlunos(){
     scanf ("%d", &nAlunos);
     nFinalAlunos = nAtualAlunos + nAlunos;
         if (nFinalAlunos > 30){
-            printf ("\nAtigiu o número maximo de alunos");
-            /*return ao menu*/
+            printf ("\nSó podem existir no maximo 30 alunos");
+            limpaEcra();
         }else{
             for (i = 0; i < nAlunos; i++){
             	limpaEcra();
@@ -312,8 +313,8 @@ void InserirInstrutores(){
     scanf ("%d", &nInstrutores);
     nFinalInstrutores = nAtualInstrutores + nInstrutores;
         if (nFinalInstrutores > 10){
-            printf ("\nAtigiu o numero maximo de instrutores");
-            /*return ao menu*/
+            printf ("\nSó podem existir no maximo 10 instrutores");
+            limpaEcra();
         }else{
             for (i = 0; i < nInstrutores; i++){
             	limpaEcra();
@@ -372,4 +373,72 @@ void subMenu3_esc2(){
 void limpaEcra(){
 	system("clear||cls");
     printf ("\n");
+}
+
+void alterarAluno(){
+	int alunoEcontrado, respostaAlterar, numAluno;
+	int flg = 0;
+	DadosAlunos();
+	
+	printf("\nIntroduza o número do aluno que pretrende alterar: ");
+	scanf("%d", &numAluno);
+	printf("\n ... a procurar ...\n");
+	for(i = 0; i < nFinalAlunos; i++){
+		if(aluno_x[i].numAluno == numAluno){
+			flg=1;
+			printf("\n Aluno Encontrado --- [ %d ]", aluno_x[i].numAluno);
+			printf("\n 1) Nome \t\t : %s", aluno_x[i].nomeAluno );
+			printf("\n 2) Data De Nascimento \t\t: %i", aluno_x[i].dataNascimento);
+			printf("\n 3) Cartão de cidadão \t : %f", aluno_x[i].ccAluno);
+			printf("\n 4) NIF \t\t: %i", aluno_x[i].nif );
+			printf("\n 5) Data de conclusão \t : %f", aluno_x[i].dataConclusao );
+			printf("\n 6) Número da carta \t : %f", aluno_x[i].numeroCarta);
+			printf("\n 7) Aluno Ativo \t : %f", aluno_x[i].ativoAluno);
+			printf("\n 8) Morada \t : %s,%s,%s,%s",rua[i],porta[i],codigoPostal[i],localidade[i] );
+			printf("\n -------------------------");
+			alunoEcontrado = i;
+		}
+	}	
+
+	if(flg == 1){
+	printf("\nEscola o campo a alterar (1 - 8): ");
+	scanf("%d", &respostaAlterar);
+		switch(respostaAlterar){
+			case 1 :
+				printf("\nNome: ");
+				scanf(" %30[^\n]s", &aluno_x[alunoEcontrado].nomeAluno);		
+			break;
+			case 2 :
+				printf("\nIntroduzir Data De Nascimento: ");
+				scanf(" %30[^\n]s", &aluno_x[alunoEcontrado].dataNascimento);
+			break;
+			/*case 3 :
+				printf("\nIntroduzir morada : ");
+				//Implementar com split
+			break;*/
+			case 4 :
+				printf("\nIntroduzir Cartão De Cidadão : ");
+				scanf("%d", &aluno_x[alunoEcontrado].ccAluno);
+			break;
+			case 5 :
+				printf("\nIntroduzir NIF : ");
+				scanf("%d", &aluno_x[alunoEcontrado].nif);
+			break;
+			case 6 :
+				printf("\nIntroduzir Data De Conclusao Da Carta : ");
+				scanf(" %30[^\n]s", &aluno_x[alunoEcontrado].dataConclusao);
+			break;
+			case 7 :
+				printf("\nIntroduzir Número De Carta : ");
+				scanf("%d", &aluno_x[alunoEcontrado].numeroCarta);
+			break;
+			case 8 :
+				printf("\nO aluno encontra-se ativo no momento\n1 - SIM\n2 - NAO\nR:  ");
+				scanf("%d", &aluno_x[alunoEcontrado].ativoAluno);
+			break;
+		}
+	}
+	else{
+		printf("\n -- Aluno Não Encontrado --");
+	}
 }
