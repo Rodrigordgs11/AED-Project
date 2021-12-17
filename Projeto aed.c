@@ -9,13 +9,11 @@ typedef struct Morada{
          char codigoPostal[30];
          char localidade[30];
 } Morada;
-
 typedef struct DataNascimento{
     int aaaa;
     int mm;
     int dd;
 } DataNascimento;
-
 typedef struct DataConclusao{
     int aaaa;
     int mm;
@@ -43,12 +41,9 @@ typedef struct Aluno{
        char anoEntrada[10][10];
        int ativoInstrutor;
    } Instrutores;
-
 Aluno aluno_x[30];
 Instrutores instrutores_x[10];
-
 /*@@@@ FUN??ES E PROCEDIMENTOS                  @@@@*/
-
 void menu();
 void MenuAlunos();
 void MenuInstrutores();
@@ -62,15 +57,13 @@ void subMenu3_esc2();
 void limpaEcra();
 void verificacaoCCAluno();
 void verificacaoNIF();
-void verificacaoCC();
-
+void verificacaoCCInstrutor();
 /* variaveis*/
 char rua[30][30];
 char porta[30][30];
 char codigoPostal[30][30];
 char localidade[30][30];
 int flag = 0;
-
 // DECLARA??O DE VARI?VEIS E DE CONSTANTES
 int escolhaPrincipal;
 //VARIAVEIS INSTRUTORES
@@ -85,17 +78,13 @@ char aulas[100];
 int escolhaMarcacao;
 int escolhaAlunos;
 int nAlunos, nFinalAlunos, nAtualAlunos = 0;
-
-
 /*@@@@ FUN??O MAIN                              @@@@*/
 int main(void) {
    setlocale(LC_ALL, "Portuguese");
    system("COLOR FC");
     menu();
 }
-
 /*-------------------------Funçoes-------------------------*/
-
 void menu(){
     do{
     printf("\n");
@@ -194,8 +183,6 @@ void menu(){
     printf("\n\n");
     }while(escolhaPrincipal != 0);
 }
-
-
 void MenuAlunos(){
     do{
        printf("--------- Gestão de Alunos ---------\n");
@@ -207,7 +194,6 @@ void MenuAlunos(){
         scanf("%d",&escolhaAlunos);
     }while(escolhaAlunos < 0 || escolhaAlunos > 3);
 }
-
 void MenuInstrutores(){
     do{
         printf("--------- Gestão de Instrutores ---------\n");
@@ -219,7 +205,6 @@ void MenuInstrutores(){
         scanf("%d",&escolhaInstrutores);
     }while(escolhaInstrutores < 0 || escolhaInstrutores > 3);
 }
-
 void MenuConsulta(){
     do{
         printf("--------- Marcação/Consultas de Aulas ---------\n");
@@ -231,7 +216,6 @@ void MenuConsulta(){
         scanf("%d",&escolhaMarcacao);
     }while(escolhaMarcacao < 0 || escolhaMarcacao > 3);
 }
-
 void InserirAlunos(){
     printf("--------- INSERIR ALUNOS ---------\n");
     printf ("\nIntroduza o número de alunos que pretende inserir: ");
@@ -246,55 +230,54 @@ void InserirAlunos(){
                 printf("--------- INSERIR ALUNOS ---------\n");
                 printf("\nIntroduza o nome do aluno: ");
                 scanf(" %30[^\n]s", &aluno_x[i].nomeAluno);
-                printf("\nIntroduza a morada (rua, porta, código postal, localidade): ");
-                //scanf(" %30[^\n]s", aluno_x[30].morada + nAtualAlunos);
-                printf("\nIntroduza a rua: ");
-                scanf(" %30[^\n]s", &rua[i]);
-                printf("\nIntroduza a porta: ");
-                scanf(" %30[^\n]s", &porta[i]);
-                printf("\nIntroduza a código postal: ");
-                scanf(" %30[^\n]s", &codigoPostal[i]);
-                printf("\nIntroduza a localidade: ");
-                scanf(" %30[^\n]s", &localidade[i] );
-                printf("\nIntroduza a data de nascimento: ");
-                scanf(" %30[^\n]s", &aluno_x[i].dataNascimento);
-                printf("\nIntroduza o cartao de cidadao: ");
-                scanf("%d", &aluno_x[i].ccAluno);
-                verificacaoCC();
-                printf("\nIntroduza o NIF: ");
-                scanf("%d", &aluno_x[i].nif);
-                verificacaoNIF();
-                //Perguntar se ja cuncluiu a carta!
-                do{
-                    printf("\nO aluno %s ja concluiu a carta de condução?\n1- Sim\n2- Não\nR:. ",aluno_x[i].nomeAluno);
-                    scanf("%d",&respConcluCarta);
-                if(respConcluCarta==1){
-                    printf("\nIntroduza a data de conclusao de carta: ");
-                    scanf(" %30[^\n]s", &aluno_x[i].dataConclusao);
-                    printf("\nIntroduza o numero de carta: ");
-                    scanf("%d", &aluno_x[i].numeroCarta);
-                    aluno_x[i].ativoAluno=0;
-                    break;
-                }else if(respConcluCarta==2){
-                    printf("\nO aluno encontra-se ativo no momento\n1 - SIM\n2 - NAO\nR:. ");
-                    scanf("%d", &aluno_x[i].ativoAluno);
-                    break;
-                }else if(respConcluCarta!=1||respConcluCarta!=2){
-                    limpaEcra();
-                    printf("Introduza uma opção Valida");
-                    limpaEcra();
-                }
-                }while(respConcluCarta!=1 || respConcluCarta!=2);
-                aluno_x[i].numAluno = nAtualAlunos+1;
-                nAtualAlunos++;
-                limpaEcra();
+                 printf("\nIntroduza a morada (rua, porta, código postal, localidade): ");
+                 //scanf(" %30[^\n]s", aluno_x[30].morada + nAtualAlunos);
+                 printf("\nIntroduza a rua: ");
+                 scanf(" %30[^\n]s", &aluno_x[i].morada.rua);
+                 printf("\nIntroduza a porta: ");
+                 scanf(" %30[^\n]s", &porta[i]);
+                 printf("\nIntroduza a código postal: ");
+                 scanf(" %30[^\n]s", &codigoPostal[i]);
+                 printf("\nIntroduza a localidade: ");
+                 scanf(" %30[^\n]s", &localidade[i] );
+                 printf("\nIntroduza a data de nascimento no seguinte formato(dd/mm/aaaa): ");
+                 scanf("%d/%d/%d",&aluno_x[i].dataNascimento.dd,&aluno_x[i].dataNascimento.mm,&aluno_x[i].dataNascimento.aaaa);
+                 printf("\nIntroduza o cartao de cidadao: ");
+                 scanf("%d", &aluno_x[i].ccAluno);
+                 verificacaoCCAluno();
+                 printf("\nIntroduza o NIF: ");
+                 scanf("%d", &aluno_x[i].nif);
+                 verificacaoNIF();
+                 //Perguntar se ja cuncluiu a carta!
+                 do{
+                     printf("\nO aluno %s ja concluiu a carta de condução?\n1- Sim\n2- Não\nR:. ",aluno_x[i].nomeAluno);
+                     scanf("%d",&respConcluCarta);
+                 if(respConcluCarta==1){
+                     printf("\nIntroduza a data de conclusao de carta no seguinte formato(dd/mm/aaaa): ");
+                     scanf("%d/%d/%d",&aluno_x[i].dataConclusao.dd,&aluno_x[i].dataConclusao.mm,&aluno_x[i].dataConclusao.aaaa);
+                     printf("\nIntroduza o numero de carta: ");
+                     scanf("%d", &aluno_x[i].numeroCarta);
+                     aluno_x[i].ativoAluno=0;
+                     break;
+                 }else if(respConcluCarta==2){
+                     printf("\nO aluno encontra-se ativo no momento\n1 - SIM\n2 - NAO\nR:. ");
+                     scanf("%d", &aluno_x[i].ativoAluno);
+                     break;
+                 }else if(respConcluCarta!=1||respConcluCarta!=2){
+                     limpaEcra();
+                     printf("Introduza uma opção Valida");
+                     limpaEcra();
+                 }
+                 }while(respConcluCarta!=1 || respConcluCarta!=2);
+                 aluno_x[i].numAluno = nAtualAlunos+1;
+                 nAtualAlunos++;
+                 limpaEcra();
                 printf("Aluno inserido com sucesso..");
                 sleep(2);
                 limpaEcra();
             }
         }
 }
-
 void DadosAlunos(){
     printf("--------- LISTAGEM DE ALUNOS ---------\n\n");
         for (i = 0; i < nFinalAlunos; i++){
@@ -311,7 +294,6 @@ void DadosAlunos(){
             printf("\n\n");
         }
 }
-
 void InserirInstrutores(){
     printf("--------- INSERIR INSTRUTORES ---------\n");
     printf ("\nIntroduza o numero de instrutores que pretende inserir: ");
@@ -346,7 +328,6 @@ void InserirInstrutores(){
             }
         }
 }
-
 void DadosInstrutores(){
     for (i = 0; i < nFinalInstrutores; i++){
         printf("\nInstrutor: %s", instrutores_x[i].nomeInstrutor);
@@ -357,9 +338,7 @@ void DadosInstrutores(){
         printf("\n\n");
     }
 }
-
 void MarcacaoAula(){
-
     printf("-------- Tabela Instrutores --------\n\nnº Instrutor\tNome\t\t\t\tEmail");
     for(i=0; i < nFinalInstrutores;i++){
     printf("\n%d\t\t\t\t%s\t\t%s\n",instrutores_x[i].numInstrutor,instrutores_x[i].nomeInstrutor,instrutores_x[i].emailInstrutor);
@@ -372,16 +351,13 @@ void MarcacaoAula(){
     }
     }
 }
-
 void subMenu3_esc2(){
     
 }
-
 void limpaEcra(){
     system("clear||cls");
     printf ("\n");
 }
-
 void alterarAluno(){
     int alunoEcontrado, respostaAlterarAluno, numAluno;
     int flgAluno = 0;
@@ -406,7 +382,6 @@ void alterarAluno(){
             alunoEcontrado = i;
         }
     }
-
     if(flgAluno == 1){
     printf("\nEscola o campo a alterar (1 - 8): ");
     scanf("%d", &respostaAlterarAluno);
@@ -449,7 +424,6 @@ void alterarAluno(){
         printf("\n -- Aluno Não Encontrado --");
     }
 }
-
 void alterarInstrutor(){
     int instrutorEcontrado, respostaAlterarInstrutor, numInstrutor;
     int flgInstrutor = 0;
@@ -471,7 +445,6 @@ void alterarInstrutor(){
             instrutorEcontrado = i;
         }
     }
-
     if(flgInstrutor == 1){
     printf("\nEscola o campo a alterar (1 - 8): ");
     scanf("%d", &respostaAlterarInstrutor);
@@ -502,7 +475,6 @@ void alterarInstrutor(){
         printf("\n -- Aluno Não Encontrado --");
     }
 }
-
 void verificacaoCCAluno(){
     do{
     for(j=0;j < nFinalAlunos;j++){
@@ -513,9 +485,7 @@ void verificacaoCCAluno(){
         }
     }
     }while(j<nFinalAlunos);
-
 }
-
 void verificacaoNIF(){
     do{
     for(j=0;j < nFinalAlunos;j++){
@@ -526,9 +496,7 @@ void verificacaoNIF(){
         }
     }
     }while(j<nFinalAlunos);
-
 }
-
 void verificacaoCCInstrutor(){
     do{
     for(j = 0; j < nFinalInstrutores; j++){
@@ -539,9 +507,7 @@ void verificacaoCCInstrutor(){
         }
     }
     }while(j < nFinalInstrutores);
-
 }
-
 void verificacaoCCEmail(){
     do{
     for(j = 0; j < nFinalInstrutores; j++){
@@ -552,5 +518,4 @@ void verificacaoCCEmail(){
         }
     }
     }while(j < nFinalInstrutores);
-
 }
