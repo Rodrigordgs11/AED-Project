@@ -249,7 +249,7 @@ void InserirAlunos(){
                 printf("\nIntroduza a morada (rua, porta, código postal, localidade): ");
                 //scanf(" %30[^\n]s", aluno_x[30].morada + nAtualAlunos);
                 printf("\nIntroduza a rua: ");
-                scanf(" %30[^\n]s", &aluno_x[i].morada.rua);
+                scanf(" %30[^\n]s", &rua[i]);
                 printf("\nIntroduza a porta: ");
                 scanf(" %30[^\n]s", &porta[i]);
                 printf("\nIntroduza a código postal: ");
@@ -257,19 +257,34 @@ void InserirAlunos(){
                 printf("\nIntroduza a localidade: ");
                 scanf(" %30[^\n]s", &localidade[i] );
                 printf("\nIntroduza a data de nascimento: ");
-                scanf("%d/%d/%d",&aluno_x[i].dataNascimento.dd,&aluno_x[i].dataNascimento.mm,&aluno_x[i].dataNascimento.aaaa);
+                scanf(" %30[^\n]s", &aluno_x[i].dataNascimento);
                 printf("\nIntroduza o cartao de cidadao: ");
                 scanf("%d", &aluno_x[i].ccAluno);
-                verificacaoCCAluno();
+                verificacaoCC();
                 printf("\nIntroduza o NIF: ");
                 scanf("%d", &aluno_x[i].nif);
                 verificacaoNIF();
-                printf("\nIntroduza a data de conclusao de carta: ");
-                scanf("%d/%d/%d",&aluno_x[i].dataConclusao.dd,&aluno_x[i].dataConclusao.mm,&aluno_x[i].dataConclusao.aaaa);
-                printf("\nIntroduza o numero de carta: ");
-                scanf("%d", &aluno_x[i].numeroCarta);
-                printf("\nO aluno encontra-se ativo no momento\n1 - SIM\n2 - NAO\nR:. ");
-                scanf("%d", &aluno_x[i].ativoAluno);
+                //Perguntar se ja cuncluiu a carta!
+                do{
+                    printf("\nO aluno %s ja concluiu a carta de condução?\n1- Sim\n2- Não\nR:. ",aluno_x[i].nomeAluno);
+                    scanf("%d",&respConcluCarta);
+                if(respConcluCarta==1){
+                    printf("\nIntroduza a data de conclusao de carta: ");
+                    scanf(" %30[^\n]s", &aluno_x[i].dataConclusao);
+                    printf("\nIntroduza o numero de carta: ");
+                    scanf("%d", &aluno_x[i].numeroCarta);
+                    aluno_x[i].ativoAluno=0;
+                    break;
+                }else if(respConcluCarta==2){
+                    printf("\nO aluno encontra-se ativo no momento\n1 - SIM\n2 - NAO\nR:. ");
+                    scanf("%d", &aluno_x[i].ativoAluno);
+                    break;
+                }else if(respConcluCarta!=1||respConcluCarta!=2){
+                    limpaEcra();
+                    printf("Introduza uma opção Valida");
+                    limpaEcra();
+                }
+                }while(respConcluCarta!=1 || respConcluCarta!=2);
                 aluno_x[i].numAluno = nAtualAlunos+1;
                 nAtualAlunos++;
                 limpaEcra();
