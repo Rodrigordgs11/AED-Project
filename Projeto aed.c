@@ -262,16 +262,14 @@ void InserirAlunos(){
                 scanf(" %30[^\n]s", &aluno_x[i].dataNascimento);
                 printf("\nIntroduza o cartao de cidadao: ");
                 scanf("%d", &aluno_x[i].ccAluno);
-                /*for (i = 0; i < nFinalAlunos; i++){
-                    if (aluno_x[nFinalAlunos].ccAluno == aluno_x[i].ccAluno) flag = 1;
-                    if (flag == 1){
-                        do{
-                            printf("\nJá existe um aluno com o número cartão de cidadão introduzido! \nInsira outro número cartão de cidadão");
+                for(j=0;j<nFinalAlunos;j++){
+                    if (aluno_x[i].ccAluno==aluno_x[j].ccAluno && i!=j){
+                        do{ printf("\nJá existe um aluno com o número cartão de cidadão introduzido! \nInsira outro número cartão de cidadão");
                             scanf("%d", &aluno_x[i].ccAluno);
-                        }while(aluno_x[i].ccAluno == aluno_x[nFinalAlunos].ccAluno);
+                        }while(aluno_x[i].ccAluno==aluno_x[j].ccAluno && i!=j);
                     }
-                    flag = 0;
-                }*/
+                }
+                
                 printf("\nIntroduza o NIF: ");
                 scanf("%d", &aluno_x[i].nif);
                 printf("\nIntroduza a data de conclusao de carta: ");
@@ -495,4 +493,3 @@ void alterarInstrutor(){
         printf("\n -- Aluno Não Encontrado --");
     }
 }
-
