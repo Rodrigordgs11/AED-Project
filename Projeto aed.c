@@ -65,6 +65,8 @@ void DadosInstrutores();
 void MarcacaoAula();
 void subMenu3_esc2();
 void limpaEcra();
+void verificacaoCC();
+void verificacaoNIF();
 
 /* variaveis*/
 char rua[30][30];
@@ -262,16 +264,10 @@ void InserirAlunos(){
                 scanf(" %30[^\n]s", &aluno_x[i].dataNascimento);
                 printf("\nIntroduza o cartao de cidadao: ");
                 scanf("%d", &aluno_x[i].ccAluno);
-                for(j=0;j<nFinalAlunos;j++){
-                    if (aluno_x[i].ccAluno==aluno_x[j].ccAluno && i!=j){
-                        do{ printf("\nJá existe um aluno com o número cartão de cidadão introduzido! \nInsira outro número cartão de cidadão");
-                            scanf("%d", &aluno_x[i].ccAluno);
-                        }while(aluno_x[i].ccAluno==aluno_x[j].ccAluno && i!=j);
-                    }
-                }
-                
+                verificacaoCC();
                 printf("\nIntroduza o NIF: ");
                 scanf("%d", &aluno_x[i].nif);
+                verificacaoNIF();
                 printf("\nIntroduza a data de conclusao de carta: ");
                 scanf(" %30[^\n]s", &aluno_x[i].dataConclusao);
                 printf("\nIntroduza o numero de carta: ");
@@ -492,4 +488,32 @@ void alterarInstrutor(){
     else{
         printf("\n -- Aluno Não Encontrado --");
     }
+}
+
+void verificacaoCC(){
+    do{
+    for(j=0;j < nFinalAlunos;j++){
+        while (aluno_x[i].ccAluno==aluno_x[j].ccAluno && i!=j){
+            printf("\nJá existe um aluno com o número cartão de cidadão introduzido! \nInsira outro número cartão de cidadão");
+                scanf("%d", &aluno_x[i].ccAluno);
+            j=0;
+        }
+    }
+    }while(j<nFinalAlunos);
+
+}
+
+void verificacaoNIF(){
+    do{
+    for(j=0;j < nFinalAlunos;j++){
+        while (aluno_x[i].nif==aluno_x[j].nif && i!=j){
+            printf("\nJá existe um aluno com o Numero de identificação Fiscal introduzido! \nInsira outro Numero de identificação Fiscal");
+                scanf("%d", &aluno_x[i].nif);
+            j=0;
+        }
+    }
+    }while(j<nFinalAlunos);
+
+}
+
 }
