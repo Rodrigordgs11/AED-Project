@@ -36,12 +36,12 @@ typedef struct Aluno{
    } Aluno;
    
     typedef struct Instrutores{
-        int numInstrutor;
-       char nomeInstrutor[10][30];
-       char ccInstrutor[10][9];
-       char emailInstrutor[10][30];
-       char anoEntrada[10][10];
-       int ativoInstrutor;
+    	int numInstrutor;
+    	char nomeInstrutor[10][30];
+    	char ccInstrutor[10][9];
+    	char emailInstrutor[10][30];
+    	char anoEntrada[10][10];
+		int ativoInstrutor;
    } Instrutores;
 
 Aluno aluno_x[30];
@@ -87,100 +87,107 @@ int nAlunos, nFinalAlunos, nAtualAlunos = 0;
 
 /*@@@@ FUN??O MAIN                              @@@@*/
 int main(void) {
-   setlocale(LC_ALL, "Portuguese");
-   system("COLOR FC");
+	setlocale(LC_ALL, "Portuguese");
+	system("COLOR FC");
 	Menu();
 }
 
 /*-------------------------Funçoes-------------------------*/
 
-//EM FALTA, MENU ALTERAÇOES  
+//EM FALTA,  
 void Menu(){
     do{
     	printf("\n");
-    switch (MenuPrincipal()){
-    case 1:
-            limpaEcra();
-            switch (MenuAlunos()){
-            case 1:
-                limpaEcra();
-                InserirAlunos();
-            break;
-            case 2:
-                limpaEcra();
-                DadosAlunos();
-            break;
-            /*case 0:
-                printf("Pretende recuar para o menu principal\n1 - Sim\n2 - Não");
-                scanf("%d", &resAlunos);
-                if (resAlunos == 1){
-                return menu principal*//*
-                }else{
-                    system("clear||cls");
-                    printf("\nA fechar o programa..");
-                    sleep(1);
-                }
-            break;*/
-            }
-    break;
-    case 2:
-            limpaEcra();
-            MenuInstrutores();
-            switch (MenuInstrutores()){
-            case 1:
-                limpaEcra();
-                InserirInstrutores();
-            break;
-            case 2:
-            //listar instrutores
-                DadosInstrutores();  
-            break;
-            /*case 0:
-                printf("Pretende recuar para o menu principal\n1 - Sim\n2 - Não");
-                scanf("%d", &resInstrutores);
-                if (resAlunos == 1){
-                return menu principal*//*
-                }else{
-                    system("clear||cls");
-                    printf("\nA fechar o programa..");
-                    sleep(1);
-                }
-            break;*/
-            }
-    break;
-    case 3:
-            limpaEcra();
-            MenuConsulta();
-            switch (MenuConsulta()){
-            case 1:
-                MarcacaoAula();
-            break;
-            case 2:
-            //listar MARCAçÕES
-                limpaEcra();
-                subMenu3_esc2();
-            break;
-            /*case 0:
-                printf("Pretende recuar para o menu principal\n1 - Sim\n2 - Não");
-                scanf("%d", &resMarcacao);
-                if (resAlunos == 1){
-                return menu principal*//*
-                }else{
-                    system("clear||cls");
-                    printf("\nA fechar o programa..");
-                    sleep(1);
-                }
-            break;*/
-            }
-    break;
-    case 0:
-        limpaEcra();
-        sleep(1);
-    break;
-    }
+		switch (MenuPrincipal()){
+		case 1:
+			limpaEcra();
+		    	switch (MenuAlunos()){
+		    	case 1:
+		        	limpaEcra();
+		        	InserirAlunos();
+		    	break;
+		    	case 2:
+		        	limpaEcra();
+		        	DadosAlunos();
+		    	break;
+			    case 3:
+			    	limpaEcra();
+			    	alterarAluno();
+			    break;
+			    /*case 0:
+			        printf("Pretende recuar para o menu principal\n1 - Sim\n2 - Não");
+			        scanf("%d", &resAlunos);
+			        if (resAlunos == 1){
+			        return menu principal*//*
+			        }else{
+			            system("clear||cls");
+			            printf("\nA fechar o programa..");
+			            sleep(1);
+			        }
+			    break;*/
+		    	}	
+		break;
+    	case 2:
+	    	limpaEcra();
+	    	MenuInstrutores();
+			    switch (MenuInstrutores()){
+			    case 1:
+					limpaEcra();
+			        InserirInstrutores();
+			    break;
+			    case 2:
+			        DadosInstrutores();  
+			    break;
+			    case 3:
+			    	alterarInstrutor();
+			    break;
+			    /*case 0:
+			        printf("Pretende recuar para o menu principal\n1 - Sim\n2 - Não");
+			        scanf("%d", &resInstrutores);
+			        if (resAlunos == 1){
+			        return menu principal*//*
+			        }else{
+			            system("clear||cls");
+			            printf("\nA fechar o programa..");
+			            sleep(1);
+			        }
+			    break;*/
+			    }
+	    break;
+    	case 3:
+    		limpaEcra();
+    		MenuConsulta();
+	    		switch (MenuConsulta()){
+		    case 1:
+		        MarcacaoAula();
+		    break;
+		    case 2:
+		    //listar MARCAçÕES
+		        limpaEcra();
+		        subMenu3_esc2();
+		    break;
+		    /*case 0:
+		        printf("Pretende recuar para o menu principal\n1 - Sim\n2 - Não");
+		        scanf("%d", &resMarcacao);
+		        if (resAlunos == 1){
+		        return menu principal*//*
+		        }else{
+		            system("clear||cls");
+		            printf("\nA fechar o programa..");
+		            sleep(1);
+		        }
+		    break;*/
+	   		}
+	    break;
+    	case 0:
+        	limpaEcra();
+        	sleep(1);
+   		break;
+    	}
     printf("\n\n");
     }while(escolhaPrincipal != 0);
 }
+
 int MenuPrincipal(){
 do{
 	            printf("--------- Menu Principal ---------\n");
@@ -192,7 +199,6 @@ do{
 	            scanf("%d",&escolhaPrincipal);
 	        }while(escolhaPrincipal < 0 || escolhaPrincipal > 3);
 	        return escolhaPrincipal;
-	
 }
 
 int MenuAlunos(){
@@ -262,39 +268,39 @@ void InserirAlunos(){
                 scanf(" %30[^\n]s", &aluno_x[i].morada.localidade);
                 printf("\nIntroduza a data de nascimento no seguinte formato(dd/mm/aaaa): ");
                 scanf("%d/%d/%d",&aluno_x[i].dataNascimento.dd,&aluno_x[i].dataNascimento.mm,&aluno_x[i].dataNascimento.aaaa);
-                printf("\nIntroduza o cartao de cidadao: ");
+                printf("\nIntroduza o cartão de cidadão: ");
                 scanf("%d", &aluno_x[i].ccAluno);
                 verificacaoCCAluno();
                 printf("\nIntroduza o NIF: ");
                 scanf("%d", &aluno_x[i].nif);
                 verificacaoNIFAluno();
                 //Perguntar se ja cuncluiu a carta!
-                do{
-                    printf("\nO aluno %s ja concluiu a carta de condução?\n1- Sim\n2- Não\nR:. ",aluno_x[i].nomeAluno);
-                    scanf("%d",&respConcluCarta);
-                if(respConcluCarta==1){
-                    printf("\nIntroduza a data de conclusao de carta no seguinte formato(dd/mm/aaaa): ");
-                    scanf("%d/%d/%d",&aluno_x[i].dataConclusao.dd,&aluno_x[i].dataConclusao.mm,&aluno_x[i].dataConclusao.aaaa);
-                    printf("\nIntroduza o numero de carta: ");
-                    scanf("%d", &aluno_x[i].numeroCarta);
-                    aluno_x[i].ativoAluno=0;
-                    break;
-                }else if(respConcluCarta==2){
-                    printf("\nO aluno encontra-se ativo no momento\n1 - SIM\n2 - NAO\nR:. ");
-                    scanf("%d", &aluno_x[i].ativoAluno);
-                    break;
-                }else if(respConcluCarta!=1||respConcluCarta!=2){
-                    limpaEcra();
-                    printf("Introduza uma opção Valida");
-                    limpaEcra();
-                }
-                }while(respConcluCarta!=1 || respConcluCarta!=2);
-	                aluno_x[i].numAluno = nAtualAlunos+1;
-	                nAtualAlunos++;
-	                limpaEcra();
-	                printf("Aluno inserido com sucesso..");
-	                sleep(2);
-	                limpaEcra();
+	                do{
+	                    printf("\nO aluno %s ja concluiu a carta de condução?\n1- Sim\n2- Não\nR:. ",aluno_x[i].nomeAluno);
+	                    scanf("%d",&respConcluCarta);
+	                if(respConcluCarta==1){
+	                    printf("\nIntroduza a data de conclusão de carta no seguinte formato(dd/mm/aaaa): ");
+	                    scanf("%d/%d/%d",&aluno_x[i].dataConclusao.dd,&aluno_x[i].dataConclusao.mm,&aluno_x[i].dataConclusao.aaaa);
+	                    printf("\nIntroduza o número de carta: ");
+	                    scanf("%d", &aluno_x[i].numeroCarta);
+	                    aluno_x[i].ativoAluno=0;
+	                    break;
+	                }else if(respConcluCarta==2){
+	                    printf("\nO aluno encontra-se ativo no momento\n1 - SIM\n2 - NÃO\nR:. ");
+	                    scanf("%d", &aluno_x[i].ativoAluno);
+	                    break;
+	                }else if(respConcluCarta!=1||respConcluCarta!=2){
+	                    limpaEcra();
+	                    printf("Introduza uma opção Valida");
+	                    limpaEcra();
+	                }
+	                }while(respConcluCarta!=1 || respConcluCarta!=2);
+	            aluno_x[i].numAluno = nAtualAlunos+1;
+	            nAtualAlunos++;
+	            limpaEcra();
+	            printf("Aluno inserido com sucesso..");
+	            sleep(2);
+	            limpaEcra();
             }
         }
 }
@@ -302,14 +308,14 @@ void InserirAlunos(){
 void DadosAlunos(){
     printf("--------- LISTAGEM DE ALUNOS ---------\n\n");
         for (i = 0; i < nFinalAlunos; i++){
-            printf("--------- ALUNO NÚMERO[%d] ---------\n", aluno_x[i].numAluno);
+            printf("--------- ALUNO NÚMERO [ %d ] ---------\n", aluno_x[i].numAluno);
             //printf ("\nAluno: %d", aluno_x[i].numAluno);
             printf ("\nNome: %s", aluno_x[i].nomeAluno);
-            printf ("\nData Nascimento: %s", aluno_x[i].dataNascimento);
-            printf ("\nCC: %d", aluno_x[i].ccAluno);
+            printf ("\nData Nascimento: %d/%d/%d", aluno_x[i].dataNascimento.dd,&aluno_x[i].dataNascimento.mm,&aluno_x[i].dataNascimento.aaaa);
+            printf ("\nCartão De Cidadão: %d", aluno_x[i].ccAluno);
             printf ("\nNif: %d", aluno_x[i].nif);
-            printf ("\ndata conclusao: %s", aluno_x[i].dataConclusao);
-            printf ("\nnumero Carta: %d", aluno_x[i].numeroCarta);
+            printf ("\ndata Conclusão: %d/%d/%d", aluno_x[i].dataConclusao.dd, aluno_x[i].dataConclusao.mm, aluno_x[i].dataConclusao.aaaa);
+            printf ("\nNúmero Carta: %d", aluno_x[i].numeroCarta);
             printf ("\nAtivo: %d", aluno_x[i].ativoAluno);
             printf("\nMorada: %s,%s,%s,%s",aluno_x[i].morada.rua,aluno_x[i].morada.porta,aluno_x[i].morada.codigoPostal,aluno_x[i].morada.localidade);
             printf("\n\n");
@@ -318,11 +324,11 @@ void DadosAlunos(){
 
 void InserirInstrutores(){
     printf("--------- INSERIR INSTRUTORES ---------\n");
-    printf ("\nIntroduza o numero de instrutores que pretende inserir: ");
+    printf ("\nIntroduza o número de instrutores que pretende inserir: ");
     scanf ("%d", &nInstrutores);
     nFinalInstrutores = nAtualInstrutores + nInstrutores;
         if (nFinalInstrutores > 10){
-            printf ("\nSó podem existir no maximo 10 instrutores");
+            printf ("\nSó podem existir no máximo 10 instrutores");
             limpaEcra();
         }else{
             for (i = 0; i < nInstrutores; i++){
@@ -391,7 +397,7 @@ void alterarAluno(){
     int flgAluno = 0;
     DadosAlunos();
     
-    printf("\nIntroduza o número do aluno que pretrende alterar: ");
+    printf("\nIntroduza o número do aluno que pretende alterar: ");
     scanf("%d", &numAluno);
     printf("\n ... a procurar ...\n");
     for(i = 0; i < nFinalAlunos; i++){
@@ -412,7 +418,7 @@ void alterarAluno(){
     }
 
     if(flgAluno == 1){
-    printf("\nEscola o campo a alterar (1 - 8): ");
+    printf("\nEscolha o campo a alterar (1 - 8): ");
     scanf("%d", &respostaAlterarAluno);
         switch(respostaAlterarAluno){
             case 1 :
@@ -436,7 +442,7 @@ void alterarAluno(){
                 scanf("%d", &aluno_x[alunoEcontrado].nif);
             break;
             case 6 :
-                printf("\nIntroduzir Data De Conclusao Da Carta : ");
+                printf("\nIntroduzir Data De Conclusão Da Carta : ");
                 scanf(" %30[^\n]s", &aluno_x[alunoEcontrado].dataConclusao);
             break;
             case 7 :
@@ -444,7 +450,7 @@ void alterarAluno(){
                 scanf("%d", &aluno_x[alunoEcontrado].numeroCarta);
             break;
             case 8 :
-                printf("\nO aluno encontra-se ativo no momento\n1 - SIM\n2 - NAO\nR:  ");
+                printf("\nO aluno encontra-se ativo no momento?\n1 - SIM\n2 - NÃO\nR:  ");
                 scanf("%d", &aluno_x[alunoEcontrado].ativoAluno);
             break;
         }
@@ -459,7 +465,7 @@ void alterarInstrutor(){
     int flgInstrutor = 0;
     DadosAlunos();
     
-    printf("\nIntroduza o número do aluno que pretrende alterar: ");
+    printf("\nIntroduza o número do aluno que pretende alterar: ");
     scanf("%d", &numInstrutor);
     printf("\n ... a procurar ...\n");
     for(i = 0; i < nFinalInstrutores; i++){
@@ -477,7 +483,7 @@ void alterarInstrutor(){
     }
 
     if(flgInstrutor == 1){
-    printf("\nEscola o campo a alterar (1 - 8): ");
+    printf("\nEscolha o campo a alterar (1 - 8): ");
     scanf("%d", &respostaAlterarInstrutor);
         switch(respostaAlterarInstrutor){
             case 1 :
@@ -497,7 +503,7 @@ void alterarInstrutor(){
                 scanf(" %10[^\n]s", instrutores_x[instrutorEcontrado].anoEntrada);
             break;
             case 5 :
-                printf("\nO instrutor encontra-se ativo no momento\n1 - SIM\n2 - NAO\nR:. ");
+                printf("\nO instrutor encontra-se ativo no momento\n1 - SIM\n2 - NÃO\nR:. ");
                 scanf("%d", &instrutores_x[instrutorEcontrado].ativoInstrutor);
             break;
         }
@@ -509,51 +515,48 @@ void alterarInstrutor(){
 
 void verificacaoCCAluno(){
     do{
-    for(j=0;j < nFinalAlunos;j++){
-        while (aluno_x[i].ccAluno==aluno_x[j].ccAluno && i!=j){
-            printf("\nJá existe um aluno com o número cartão de cidadão introduzido! \nInsira outro número cartão de cidadão");
+    	for(j=0;j < nFinalAlunos;j++){
+        	while (aluno_x[i].ccAluno==aluno_x[j].ccAluno && i!=j){
+            	printf("\nJá existe um aluno com o número cartão de cidadão introduzido! \nInsira outro número cartão de cidadão");
                 scanf("%d", &aluno_x[i].ccAluno);
-            j=0;
-        }
-    }
+            	j=0;
+        	}
+    	}
     }while(j<nFinalAlunos);
-
 }
 
 void verificacaoNIFAluno(){
     do{
-    for(j=0;j < nFinalAlunos;j++){
-        while (aluno_x[i].nif==aluno_x[j].nif && i!=j){
-            printf("\nJá existe um aluno com o Numero de identificação Fiscal introduzido! \nInsira outro Numero de identificação Fiscal");
+    	for(j=0;j < nFinalAlunos;j++){
+        	while (aluno_x[i].nif==aluno_x[j].nif && i!=j){
+            	printf("\nJá existe um aluno com o Numero de identificação Fiscal introduzido! \nInsira outro Número de identificação Fiscal");
                 scanf("%d", &aluno_x[i].nif);
             j=0;
-        }
-    }
+        	}
+    	}
     }while(j<nFinalAlunos);
-
 }
 
 void verificacaoCCInstrutor(){
     do{
-    for(j = 0; j < nFinalInstrutores; j++){
-        while (instrutores_x[i].ccInstrutor == instrutores_x[j].ccInstrutor && i != j){
-            printf("\nJá existe um aluno com o número cartão de cidadão introduzido! \nInsira outro número cartão de cidadão");
-            scanf("%d", &instrutores_x[i].ccInstrutor);
-            j = 0;
-        }
-    }
+    	for(j = 0; j < nFinalInstrutores; j++){
+        	while (instrutores_x[i].ccInstrutor == instrutores_x[j].ccInstrutor && i != j){
+            	printf("\nJá existe um aluno com o número cartão de cidadão introduzido! \nInsira outro número cartão de cidadão");
+            	scanf("%d", &instrutores_x[i].ccInstrutor);
+            	j = 0;
+        	}
+    	}
     }while(j < nFinalInstrutores);
-
 }
 
 void verificacaoEmailInstrutor(){
     do{
-    for(j = 0; j < nFinalInstrutores; j++){
-        while (instrutores_x[i].ccInstrutor == instrutores_x[j].ccInstrutor && i != j){
-            printf("\nJá existe um aluno com o número cartão de cidadão introduzido! \nInsira outro número cartão de cidadão");
-            scanf("%d", &instrutores_x[i].ccInstrutor);
-            j = 0;
-        }
-    }
+    	for(j = 0; j < nFinalInstrutores; j++){
+        	while (instrutores_x[i].ccInstrutor == instrutores_x[j].ccInstrutor && i != j){
+            	printf("\nJá existe um aluno com o número cartão de cidadão introduzido! \nInsira outro número cartão de cidadão");
+            	scanf("%d", &instrutores_x[i].ccInstrutor);
+            	j = 0;
+       	 	}
+   		}	
     }while(j < nFinalInstrutores);
 }
