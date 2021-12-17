@@ -78,7 +78,7 @@ int resInstrutores;
 int nInstrutores, nAtualInstrutores = 0, nFinalInstrutores;
 int escolhaInstrutores;
 int i,j;
-int resAlunos;
+int resAlunos,respConcluCarta;
 //VARIAVEIS MARCAÇÃO
 int resMarcacao;
 char aulas[100];
