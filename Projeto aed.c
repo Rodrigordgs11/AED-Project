@@ -87,6 +87,7 @@ size_t divMoradaAluno(char *idk, char *dividir){
     strcpy(DadosMorada[++i], ptrMorada);
     ptrMorada = strtok (NULL, dividir);
   }
+	return 0;
 }
 
 
