@@ -338,7 +338,7 @@ void DadosAlunos(){
             printf("--------- ALUNO NÚMERO [ %d ] ---------\n", aluno_x[i].numAluno);
             //printf ("\nAluno: %d", aluno_x[i].numAluno);
             printf ("\nNome: %s", aluno_x[i].nomeAluno);
-            printf ("\nData Nascimento: %d/%d/%d", aluno_x[i].dataNascimento.dd,&aluno_x[i].dataNascimento.mm,&aluno_x[i].dataNascimento.aaaa);
+            printf ("\nData Nascimento: %d/%d/%d", aluno_x[i].dataNascimento.dd,aluno_x[i].dataNascimento.mm,aluno_x[i].dataNascimento.aaaa);
             printf ("\nCartão De Cidadão: %d", aluno_x[i].ccAluno);
             printf ("\nNif: %d", aluno_x[i].nif);
             printf ("\ndata Conclusão: %d/%d/%d", aluno_x[i].dataConclusao.dd, aluno_x[i].dataConclusao.mm, aluno_x[i].dataConclusao.aaaa);
