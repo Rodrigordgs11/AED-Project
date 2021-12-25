@@ -103,15 +103,15 @@ void subMenu3_esc2();
 /* variaveis*/
 int flag = 0;
 char dividir[] = ",";
-char idk[30][70];
+char moradaSplit[30][70];
 char DadosMorada[30][30];
 
 // 			SPLIT MORADA
 
-size_t divMoradaAluno(char *idk, char *dividir){
+size_t divMoradaAluno(char *moradaSplit, char *dividir){
 
   char *ptrMorada;
-  ptrMorada = strtok (idk,dividir); 		//a morada ? dividida por virgulas e guarda no apontador ptrMorada
+  ptrMorada = strtok (moradaSplit,dividir); 		//a morada ? dividida por virgulas e guarda no apontador ptrMorada
   int i = 0;
   while (ptrMorada!= NULL){				//enquanto houver virgulas para partir ele parte quando a frase acaba da return 
     strcpy(DadosMorada[++i], ptrMorada);
@@ -254,7 +254,7 @@ void Menu(){
 
 int MenuPrincipal(){
 	do{
-		printf("--------- Menu Principal ---------\n");
+		printf("--------- MENU PRINCIPAL ---------\n");
 		printf(" 1 - Gestão de Alunos\n");
 		printf(" 2 - Gestão de Instrutores\n");
 		printf(" 3 - Marcação/Consultas de Aulas\n");
@@ -267,7 +267,7 @@ int MenuPrincipal(){
 
 int MenuAlunos(){
     do{
-       printf("--------- Gestão de Alunos ---------\n");
+       printf("--------- GESTÃO DE ALUNOS ---------\n");
         printf(" 1 - Inserir Alunos\n");
         printf(" 2 - Listagem Alunos\n");
         printf(" 3 - Alteração De Dados Aluno\n");
@@ -281,7 +281,7 @@ int MenuAlunos(){
 
 int MenuInstrutores(){
     do{
-        printf("--------- Gestão de Instrutores ---------\n");
+        printf("--------- GESTÃO DE INSTRUTORES ---------\n");
         printf(" 1 - Inserir Instrutores\n");
         printf(" 2 - Listagem Instrutores\n");
         printf(" 3 - Alteração De Dados Instrutor\n");
@@ -295,10 +295,10 @@ int MenuInstrutores(){
 
 int MenuConsulta(){
     do{
-        printf("--------- Marcação/Consultas de Aulas ---------\n");
+        printf("--------- MARCAÇÃO/CONSULTAS DE AULAS ---------\n");
         printf(" 1 - Inserir Marcação\n");
         printf(" 2 - Listagem Marcação\n");
-        printf(" 3 - Marcação/Consultas de Aulas\n");
+        printf(" 3 - Consultar Aulas\n");
         printf(" 0 - Sair\n");
         printf("Resposta: ");
         scanf("%d",&escolhaMarcacao);
@@ -308,7 +308,7 @@ int MenuConsulta(){
 
 int MenuListarAlunos(){
 	do{
-        printf("--------- Listagem De Alunos ---------\n");
+        printf("--------- LISTAGEM DE ALUNOS ---------\n");
         printf(" 1 - Listar Todos Os Alunos\n");
         printf(" 2 - Listar Alunos Ativos\n");
         printf(" 3 - Listar Alunos Com Carta De Condução\n");
@@ -322,7 +322,7 @@ int MenuListarAlunos(){
 
 int MenuListarInstrutores(){
 	do{
-        printf("--------- Listagem De Instrutores ---------\n");
+        printf("--------- LISTAGEM DE INSTRUTORES ---------\n");
         printf(" 1 - Listar Todos Os Instrutores\n");
         printf(" 2 - Listar Instrutores Ativos\n");
         printf(" 0 - Sair\n");
@@ -347,8 +347,8 @@ void InserirAlunos(){
             printf("\nIntroduza o nome do aluno: ");
             scanf(" %30[^\n]s", &aluno_x[i].nomeAluno);
             printf("\nIntroduza a morada (rua, porta, c?digo postal, localidade): ");
-            scanf(" %30[^\n]s", idk);
-            size_t final = divMoradaAluno (idk, dividir);
+            scanf(" %30[^\n]s", moradaSplit);
+            size_t final = divMoradaAluno (moradaSplit, dividir);
 
             strcpy(&aluno_x[i].morada.rua, &DadosMorada[1][0]);		//copia a 1 parcela do array para o vetor rua 
             strcpy(&aluno_x[i].morada.porta, &DadosMorada[2][0]);		//copia a 2 parcela do array para o vetor porta 
@@ -496,7 +496,58 @@ void DadosInstrutores(){
 }
 
 void MarcacaoAula(){
-    printf("-------- Tabela Instrutores --------\n\nn? Instrutor\tNome\t\t\t\tEmail");
+	int numAlunoMarc;
+	int numInstrutorMarc;
+	limpaEcra();
+	printf("--------- MARCAÇÃO DE UMA AULA ---------\n\n");
+	//primeiro tem de se introduzir a data e hora
+	listaAtivosAlunos(); 	//tenho algo pensado melhor mas para testes chega 
+	printf("\nIntroduza o número do aluno para marcar a aula: ");
+    scanf("%d", &numAlunoMarc);
+	for (i = 0; i < nFinalAlunos; i++){
+		if(aluno_x[i].numAluno == numAlunoMarc){
+			limpaEcra();
+			printf("\nEscolheu o aluno %s com o número %d", aluno_x[i].nomeAluno, aluno_x[i].numAluno);
+			sleep(3);
+		}else{
+			do{
+				limpaEcra();
+				printf("\nAluno não encontrado\nPor favor introduza um número de aluno válido\n");
+				sleep(2);
+				limpaEcra();
+				listaAtivosAlunos();
+				printf("\nIntroduza o número do aluno para marcar a aula: ");
+				scanf("%d", &numAlunoMarc);
+				i = 0;
+			}while(aluno_x[i].numAluno != numAlunoMarc);
+		}
+	}
+    limpaEcra();
+	listaAtivosInstrutores();
+	printf("\nIntroduza o número do instrutor para marcar a aula: ");
+    scanf("%d", &numInstrutorMarc);
+	for (i = 0; i < nFinalInstrutores; i++){
+		if(instrutores_x[i].numInstrutor == numInstrutorMarc){
+			limpaEcra();
+			printf("\nEscolheu o instrutor %s com o número %d", instrutores_x[i].nomeInstrutor, instrutores_x[i].numInstrutor);
+			sleep(3);
+		}else{
+			do{
+				limpaEcra();
+				printf("\nInstrutor não encontrado\nPor favor introduza um número de instrutor válido\n");
+				sleep(2);
+				limpaEcra();
+				listaAtivosInstrutores();
+				printf("\nIntroduza o número do instrutor para marcar a aula: ");
+				scanf("%d", &numAlunoMarc);
+				i = 0;
+			}while(instrutores_x[i].numInstrutor == numInstrutorMarc);
+		}
+	}    
+	//pedir confirmação ao utilizador
+    limpaEcra();
+    
+    /*printf("-------- Tabela Instrutores --------\n\nn? Instrutor\tNome\t\t\t\tEmail");
     for(i = 0; i < nFinalInstrutores; i++){
     	printf("\n%d\t\t\t\t%s\t\t%s\n",instrutores_x[i].numInstrutor,instrutores_x[i].nomeInstrutor,instrutores_x[i].emailInstrutor);
     }
@@ -505,7 +556,7 @@ void MarcacaoAula(){
         if (aluno_x[i].ativoAluno == 1){
     		printf("\n%d\t\t\t%s\t\t\t%d\n",aluno_x[i].numAluno,aluno_x[i].nomeAluno,aluno_x[i].ccAluno);
     	}
-    }
+    }*/
 }
 
 void subMenu3_esc2(){
@@ -613,8 +664,8 @@ void alterarAluno(){
             break;
             case 8:
                 printf("\nIntroduzir morada : ");
-                scanf(" %30[^\n]s", idk);
-                size_t final = divMoradaAluno (idk, dividir);
+                scanf(" %30[^\n]s", moradaSplit);
+                size_t final = divMoradaAluno (moradaSplit, dividir);
 
                 strcpy(&aluno_x[alunoEcontrado].morada.rua, &DadosMorada[1][0]);		//copia a 1 parcela do array para o vetor rua 
                 strcpy(&aluno_x[alunoEcontrado].morada.porta, &DadosMorada[2][0]);		//copia a 2 parcela do array para o vetor porta 
