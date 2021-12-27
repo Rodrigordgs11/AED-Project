@@ -510,16 +510,18 @@ void MarcacaoAula(){
 			printf("\nEscolheu o aluno %s com o número %d", aluno_x[i].nomeAluno, aluno_x[i].numAluno);
 			sleep(3);
 		}else{
-			do{
-				limpaEcra();
-				printf("\nAluno não encontrado\nPor favor introduza um número de aluno válido\n");
-				sleep(2);
-				limpaEcra();
-				listaAtivosAlunos();
-				printf("\nIntroduza o número do aluno para marcar a aula: ");
-				scanf("%d", &numAlunoMarc);
-				i = 0;
-			}while(aluno_x[i].numAluno != numAlunoMarc);
+			for(j = 0; j < nFinalAlunos; j++){
+				while(aluno_x[j].numAluno != numAlunoMarc){
+					limpaEcra();
+					printf("\nAluno não encontrado\nPor favor introduza um número de aluno válido\n");
+					sleep(2);
+					limpaEcra();
+					listaAtivosAlunos();
+					printf("\nIntroduza o número do aluno para marcar a aula: ");
+					scanf("%d", &numAlunoMarc);
+					j = 0;	
+				}	
+			}
 		}
 	}
     limpaEcra();
@@ -532,16 +534,17 @@ void MarcacaoAula(){
 			printf("\nEscolheu o instrutor %s com o número %d", instrutores_x[i].nomeInstrutor, instrutores_x[i].numInstrutor);
 			sleep(3);
 		}else{
-			do{
-				limpaEcra();
-				printf("\nInstrutor não encontrado\nPor favor introduza um número de instrutor válido\n");
-				sleep(2);
-				limpaEcra();
-				listaAtivosInstrutores();
-				printf("\nIntroduza o número do instrutor para marcar a aula: ");
-				scanf("%d", &numAlunoMarc);
-				i = 0;
-			}while(instrutores_x[i].numInstrutor == numInstrutorMarc);
+			for(j = 0; j < nFinalAlunos; j++){
+				while(instrutores_x[j].numInstrutor == numInstrutorMarc){
+					limpaEcra();
+					printf("\nInstrutor não encontrado\nPor favor introduza um número de instrutor válido\n");
+					sleep(2);
+					limpaEcra();
+					listaAtivosInstrutores();
+					printf("\nIntroduza o número do instrutor para marcar a aula: ");
+					j = 0;	
+				}
+			}	
 		}
 	}    
 	//pedir confirmação ao utilizador
