@@ -25,11 +25,17 @@ typedef struct DataConclusao{
     int dd;
 } DataConclusao;
 typedef struct DataEntrada{
-	
 	int aaaa;
     int mm;
     int dd;
 } DataEntrada;
+
+typedef struct DataAula{
+	int hora;
+	int aaaa;
+	int mm;
+	int dd;
+} DataAula;
 
 typedef struct Aluno{
     //VARIAVEIS ALUNOS
@@ -56,6 +62,7 @@ typedef struct Instrutores{
 
 Aluno aluno_x[30];
 Instrutores instrutores_x[10];
+DataAula dataAula;
 
 /*@@@@ FUN??ES E PROCEDIMENTOS                  @@@@*/
 
@@ -495,73 +502,6 @@ void DadosInstrutores(){
     }
 }
 
-void MarcacaoAula(){
-	int numAlunoMarc;
-	int numInstrutorMarc;
-	limpaEcra();
-	printf("--------- MARCAÇÃO DE UMA AULA ---------\n\n");
-	//primeiro tem de se introduzir a data e hora
-	listaAtivosAlunos(); 	//tenho algo pensado melhor mas para testes chega 
-	printf("\nIntroduza o número do aluno para marcar a aula: ");
-    scanf("%d", &numAlunoMarc);
-	for (i = 0; i < nFinalAlunos; i++){
-		if(aluno_x[i].numAluno == numAlunoMarc){
-			limpaEcra();
-			printf("\nEscolheu o aluno %s com o número %d", aluno_x[i].nomeAluno, aluno_x[i].numAluno);
-			sleep(3);
-		}else{
-			for(j = 0; j < nFinalAlunos; j++){
-				while(aluno_x[j].numAluno != numAlunoMarc){
-					limpaEcra();
-					printf("\nAluno não encontrado\nPor favor introduza um número de aluno válido\n");
-					sleep(2);
-					limpaEcra();
-					listaAtivosAlunos();
-					printf("\nIntroduza o número do aluno para marcar a aula: ");
-					scanf("%d", &numAlunoMarc);
-					j = 0;	
-				}	
-			}
-		}
-	}
-    limpaEcra();
-	listaAtivosInstrutores();
-	printf("\nIntroduza o número do instrutor para marcar a aula: ");
-    scanf("%d", &numInstrutorMarc);
-	for (i = 0; i < nFinalInstrutores; i++){
-		if(instrutores_x[i].numInstrutor == numInstrutorMarc){
-			limpaEcra();
-			printf("\nEscolheu o instrutor %s com o número %d", instrutores_x[i].nomeInstrutor, instrutores_x[i].numInstrutor);
-			sleep(3);
-		}else{
-			for(j = 0; j < nFinalAlunos; j++){
-				while(instrutores_x[j].numInstrutor == numInstrutorMarc){
-					limpaEcra();
-					printf("\nInstrutor não encontrado\nPor favor introduza um número de instrutor válido\n");
-					sleep(2);
-					limpaEcra();
-					listaAtivosInstrutores();
-					printf("\nIntroduza o número do instrutor para marcar a aula: ");
-					j = 0;	
-				}
-			}	
-		}
-	}    
-	//pedir confirmação ao utilizador
-    limpaEcra();
-    
-    /*printf("-------- Tabela Instrutores --------\n\nn? Instrutor\tNome\t\t\t\tEmail");
-    for(i = 0; i < nFinalInstrutores; i++){
-    	printf("\n%d\t\t\t\t%s\t\t%s\n",instrutores_x[i].numInstrutor,instrutores_x[i].nomeInstrutor,instrutores_x[i].emailInstrutor);
-    }
-    printf("-------- Tabela Alunos --------\n\nn?Aluno\t\tNome\t\t\t\tCartao de cidadao");
-    for(i = 0; i < nFinalAlunos; i++){
-        if (aluno_x[i].ativoAluno == 1){
-    		printf("\n%d\t\t\t%s\t\t\t%d\n",aluno_x[i].numAluno,aluno_x[i].nomeAluno,aluno_x[i].ccAluno);
-    	}
-    }*/
-}
-
 void subMenu3_esc2(){
     
 }
@@ -872,4 +812,76 @@ void listaAtivosInstrutores(){
 	        printf("\n\n");		
 		}
 	}	
+}
+
+void MarcacaoAula(){
+int numAlunoMarc;
+int numInstrutorMarc;
+limpaEcra();
+printf("--------- MARCAÇÃO DE UMA AULA ---------\n\n");
+printf("Introduza a hora da aula");
+scanf("%d",&dataAula.hora);
+printf("Introduza a data da aula");
+scanf("%d/%d/%d",&dataAula.dd, &dataAula.mm, &dataAula.aaaa);
+//IDEIA: LIMPAR A VARIAVEL
+//IDEIA: IMPLEMENTAR COM SPLIT.   EX: 19H, 11/09/2020
+listaAtivosAlunos(); 	//tenho algo pensado melhor mas para testes chega 
+printf("\nIntroduza o número do aluno para marcar a aula: ");
+scanf("%d", &numAlunoMarc);
+	for (i = 0; i < nFinalAlunos; i++){
+		if(aluno_x[i].numAluno == numAlunoMarc){
+			limpaEcra();
+			printf("\nEscolheu o aluno %s com o número %d", aluno_x[i].nomeAluno, aluno_x[i].numAluno);
+			sleep(3);
+		}else{
+			for(j = 0; j < nFinalAlunos; j++){
+				while(aluno_x[j].numAluno != numAlunoMarc){
+					limpaEcra();
+					printf("\nAluno não encontrado\nPor favor introduza um número de aluno válido\n");
+					sleep(2);
+					limpaEcra();
+					listaAtivosAlunos();
+					printf("\nIntroduza o número do aluno para marcar a aula: ");
+					scanf("%d", &numAlunoMarc);
+					j = 0;	
+				}	
+			}
+		}
+	}
+limpaEcra();
+listaAtivosInstrutores();
+printf("\nIntroduza o número do instrutor para marcar a aula: ");
+scanf("%d", &numInstrutorMarc);
+	for (i = 0; i < nFinalInstrutores; i++){
+		if(instrutores_x[i].numInstrutor == numInstrutorMarc){
+			limpaEcra();
+			printf("\nEscolheu o instrutor %s com o número %d", instrutores_x[i].nomeInstrutor, instrutores_x[i].numInstrutor);
+			sleep(3);
+		}else{
+			for(j = 0; j < nFinalAlunos; j++){
+				while(instrutores_x[j].numInstrutor == numInstrutorMarc){
+					limpaEcra();
+					printf("\nInstrutor não encontrado\nPor favor introduza um número de instrutor válido\n");
+					sleep(2);
+					limpaEcra();
+					listaAtivosInstrutores();
+					printf("\nIntroduza o número do instrutor para marcar a aula: ");
+					j = 0;	
+				}
+			}		
+		}
+	}    
+//pedir confirmação ao utilizador
+limpaEcra();
+
+/*printf("-------- Tabela Instrutores --------\n\nn? Instrutor\tNome\t\t\t\tEmail");
+	for(i = 0; i < nFinalInstrutores; i++){
+		printf("\n%d\t\t\t\t%s\t\t%s\n",instrutores_x[i].numInstrutor,instrutores_x[i].nomeInstrutor,instrutores_x[i].emailInstrutor);
+	}
+	printf("-------- Tabela Alunos --------\n\nn?Aluno\t\tNome\t\t\t\tCartao de cidadao");
+		for(i = 0; i < nFinalAlunos; i++){
+    		if (aluno_x[i].ativoAluno == 1){
+			printf("\n%d\t\t\t%s\t\t\t%d\n",aluno_x[i].numAluno,aluno_x[i].nomeAluno,aluno_x[i].ccAluno);
+			}
+		}*/
 }
