@@ -69,6 +69,7 @@ DataAula dataAula;
 // 			OUTRAS FUN??ES
 
 void limpaEcra();
+void limpaEspera();
 
 // 			MENUS 	
 
@@ -91,6 +92,7 @@ void listaMais18AnosAlunos();
 void verificacaoCCAluno();
 void verificacaoNIFAluno();
 void verificacaoCartaConducaoAluno();
+void listarPorNomeAluno();
 
 //			FUN??ES INSTRUTORES 
 
@@ -100,6 +102,7 @@ void alterarInstrutor();
 void verificacaoCCInstrutor();
 void verificacaoEmailInstrutor();
 void listaAtivosInstrutores();
+void listarPorNomeInstrutor();
 
 
 //			FUN??ES MARCA??ES
@@ -884,4 +887,101 @@ limpaEcra();
 			printf("\n%d\t\t\t%s\t\t\t%d\n",aluno_x[i].numAluno,aluno_x[i].nomeAluno,aluno_x[i].ccAluno);
 			}
 		}*/
+}
+
+void listarPorNomeAluno(){
+    int resAltera, resConsult, numListarNome = 1, ids[30], flg = 0;
+    char nome[20];
+    system("clearcls");
+    printf ("\nInsira o nome do aluno que pretende consultar: ");
+    scanf (" %20[^\n]s", &nome);
+    if(strlen(nome) < 2) 
+		do{
+        	printf("\nPor favor insira pelo menos 2 caracteres para procurar pelo nome: ");
+        	scanf (" %20[^\n]s", &nome);
+    	}while(strlen(nome) < 2);
+    limpaEcra();
+    for(i = 0; i < nFinalAlunos; i++){
+        if (strstr(aluno_x[i].nomeAluno, nome)){
+            flg = 1;
+            break;
+        }
+    }
+    if(flg == 1){
+    	printf("--------- DADOS ALUNOS QUE CONTEM '%s' ---------\n\n", nome);
+        for(i = 0; i < nFinalAlunos; i++){
+            if (strstr(aluno_x[i].nomeAluno, nome)){
+                printf("\n%d - %s", numListarNome, aluno_x[i].nomeAluno);
+                //posicao de cada aluno no array que corresponde a pesquisa
+                ids[numListarNome] = i; 
+                numListarNome++;
+            }
+        }
+        printf("\n0 - Voltar");
+        printf("\nInsira o numero do aluno que deseja consultar/alterar: ");
+        scanf("%d", &resConsult);
+        fflush(stdin);
+        if(resConsult != 0){
+            DadosAlunos(ids[resConsult]); //posição do aluno no array
+            printf("\nPretende alterar este aluno?\n1 - (Sim)\n0 - Não\nResposta: ");
+            scanf("%d", &resAltera);
+            if(resAltera == 1){
+                alterarAluno(ids[resConsult]);
+            }
+        }
+    }else{
+    	printf("Nenhum aluno com esse número digitado encontrado! A redirecionar ....");
+    	limpaEspera();
+    }
+}
+
+void listarPorNomeInstrutor(){
+    int resAltera, resConsult, numListarNome = 1, ids[30], flg = 0;
+    char nome[20];
+    system("clearcls");
+    printf ("\nInsira o nome do aluno que pretende consultar: ");
+    scanf (" %20[^\n]s", &nome);
+    if(strlen(nome) < 2) 
+		do{
+        	printf("\nPor favor insira pelo menos 2 caracteres para procurar pelo nome: ");
+        	scanf (" %20[^\n]s", &nome);
+    	}while(strlen(nome) < 2);
+    limpaEcra();
+    for(i = 0; i < nFinalInstrutores; i++){
+        if (strstr(instrutores_x[i].nomeInstrutor, nome)){
+            flg = 1;
+            break;
+        }
+    }
+    if(flg == 1){
+    	printf("--------- DADOS INSTRUTORES QUE CONTEM '%s' ---------\n\n", nome);
+        for(i = 0; i < nFinalAlunos; i++){
+            if (strstr(instrutores_x[i].nomeInstrutor, nome)){
+                printf("\n%d - %s", numListarNome, instrutores_x[i].nomeInstrutor);
+                //posicao de cada aluno no array que corresponde a pesquisa
+                ids[numListarNome] = i; 
+                numListarNome++;
+            }
+        }
+        printf("\n0 - Voltar");
+        printf("\nInsira o numero do aluno que deseja consultar/alterar: ");
+        scanf("%d", &resConsult);
+        fflush(stdin);
+        if(resConsult != 0){
+            DadosInstrutores(ids[resConsult]); //posição do aluno no array
+            printf("\nPretende alterar este aluno?\n1 - (Sim)\n0 - Não\nResposta: ");
+            scanf("%d", &resAltera);
+            if(resAltera == 1){
+                alterarInstrutor(ids[resConsult]);
+            }
+        }
+    }else{
+    	printf("Nenhum instrutor com o número digitado encontrado! A redirecionar ....");
+    	limpaEspera();
+    }
+}
+
+void limpaEspera(){
+	limpaEcra();
+	sleep(2);
 }
