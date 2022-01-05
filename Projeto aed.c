@@ -80,6 +80,7 @@ int MenuInstrutores();
 int MenuConsulta();
 int MenuListarAlunos();
 int MenuListarInstrutores();
+int MenuPesquisaAlunos();
 
 //			FUN??ES ALUNOS 	
 	
@@ -197,8 +198,16 @@ void Menu(){
 				}		        	
 	    	break;
 			case 3:
-		    	limpaEcra();
-		    	alterarAluno();
+				switch(MenuPesquisaAlunos()){
+					case 1:
+						limpaEcra();
+		    			alterarAluno();
+					break;
+					case 2:
+						limpaEcra();
+						listarPorNomeAluno();
+					break;
+				}
 			break;
 			case 0:
         		limpaEcra();
@@ -328,6 +337,18 @@ int MenuListarAlunos(){
         scanf("%d",&escolhaListaAlunos);
     }while(escolhaListaAlunos < 0 || escolhaListaAlunos > 4);
     return escolhaListaAlunos;
+}
+
+int MenuPesquisaAlunos(){
+	int escolhaPesquisaAlunos;
+	do{
+        printf("--------- ALTERAÇÃO ALUNOS ---------\n");
+        printf(" 1 - Pesquisar Por Número Do ALuno\n");
+        printf(" 2 - Pesquisar Por Nome\n");
+        printf("Resposta: ");
+        scanf("%d",&escolhaPesquisaAlunos);
+    }while(escolhaPesquisaAlunos < 0 || escolhaPesquisaAlunos > 2);
+    return escolhaPesquisaAlunos;
 }
 
 int MenuListarInstrutores(){
@@ -892,7 +913,7 @@ limpaEcra();
 void listarPorNomeAluno(){
     int resAltera, resConsult, numListarNome = 1, ids[30], flg = 0;
     char nome[20];
-    system("clearcls");
+    limpaEcra();
     printf ("\nInsira o nome do aluno que pretende consultar: ");
     scanf (" %20[^\n]s", &nome);
     if(strlen(nome) < 2) 
@@ -923,11 +944,13 @@ void listarPorNomeAluno(){
         fflush(stdin);
         if(resConsult != 0){
             DadosAlunos(ids[resConsult]); //posição do aluno no array
-            printf("\nPretende alterar este aluno?\n1 - (Sim)\n0 - Não\nResposta: ");
+            printf("\nPretende alterar este aluno?\n1 - Sim\n0 - Não\nResposta: ");
             scanf("%d", &resAltera);
             if(resAltera == 1){
                 alterarAluno(ids[resConsult]);
-            }
+            }else{
+            	limpaEcra();
+			}
         }
     }else{
     	printf("Nenhum aluno com esse número digitado encontrado! A redirecionar ....");
@@ -938,7 +961,7 @@ void listarPorNomeAluno(){
 void listarPorNomeInstrutor(){
     int resAltera, resConsult, numListarNome = 1, ids[30], flg = 0;
     char nome[20];
-    system("clearcls");
+    limpaEcra();
     printf ("\nInsira o nome do aluno que pretende consultar: ");
     scanf (" %20[^\n]s", &nome);
     if(strlen(nome) < 2) 
@@ -973,7 +996,9 @@ void listarPorNomeInstrutor(){
             scanf("%d", &resAltera);
             if(resAltera == 1){
                 alterarInstrutor(ids[resConsult]);
-            }
+            }else{
+            	limpaEcra();
+			}
         }
     }else{
     	printf("Nenhum instrutor com o número digitado encontrado! A redirecionar ....");
