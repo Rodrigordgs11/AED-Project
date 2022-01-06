@@ -5,14 +5,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <locale.h>
-typedef struct Morada{
-	char DadosMorada[30][30];
-    char rua[30][30];
-    char porta[30][30];
-    char codigoPostal[30][8];
-    char localidade[30][30];
-} Morada;
-
 typedef struct DataNascimento{
     int aaaa;
     int mm;
@@ -37,8 +29,22 @@ typedef struct DataAula{
 	int dd;
 } DataAula;
 
+typedef struct Aulas{
+	DataAula dataAula;
+	char quantAulas[100];
+} Aulas;
+
+typedef struct Morada{
+	char DadosMorada[30][30];
+    char rua[30][30];
+    char porta[30][30];
+    char codigoPostal[30][8];
+    char localidade[30][30];
+} Morada;
+
 typedef struct Aluno{
     //VARIAVEIS ALUNOS
+    Aulas aulas;
     Morada morada;
     int numAluno;
     char nomeAluno[30][30];
@@ -60,9 +66,10 @@ typedef struct Instrutores{
 	int ativoInstrutor;
 } Instrutores;
 
+
 Aluno aluno_x[30];
 Instrutores instrutores_x[10];
-DataAula dataAula;
+Aulas aulas;
 
 /*@@@@ FUN??ES E PROCEDIMENTOS                  @@@@*/
 
@@ -143,7 +150,6 @@ int i,j;
 int resAlunos,respConcluCarta;
 //VARIAVEIS MARCA??O
 
-char aulas[100];
 int escolhaMarcacao;
 int escolhaAlunos;
 int escolhaListaAlunos;
@@ -842,16 +848,18 @@ void MarcacaoAula(){
 int numAlunoMarc;
 int numInstrutorMarc;
 limpaEcra();
-printf("--------- MARCAÇÃO DE UMA AULA ---------\n\n");
-printf("Introduza a hora da aula");
-scanf("%d",&dataAula.hora);
-printf("Introduza a data da aula");
-scanf("%d/%d/%d",&dataAula.dd, &dataAula.mm, &dataAula.aaaa);
-//IDEIA: LIMPAR A VARIAVEL
-//IDEIA: IMPLEMENTAR COM SPLIT.   EX: 19H, 11/09/2020
-listaAtivosAlunos(); 	//tenho algo pensado melhor mas para testes chega 
-printf("\nIntroduza o número do aluno para marcar a aula: ");
-scanf("%d", &numAlunoMarc);
+//do{
+	printf("--------- MARCAÇÃO DE UMA AULA ---------\n\n");
+	printf("Introduza a hora da aula");
+	scanf("%d",&aulas.dataAula.hora);				//IDEIA: IMPLEMENTAR COM SPLIT.   EX: 19H, 11/09/2020
+	printf("Introduza a data da aula");
+	scanf("%d/%d/%d",&aulas.dataAula.dd, &aulas.dataAula.mm, &aulas.dataAula.aaaa);		//IDEIA: IMPLEMENTAR COM SPLIT.   EX: 19H, 11/09/2020
+	//for(i = 0; i <){
+		
+	//}
+	listaAtivosAlunos(); 	//tenho algo pensado melhor mas para testes chega 
+	printf("\nIntroduza o número do aluno para marcar a aula: ");
+	scanf("%d", &numAlunoMarc);
 	for (i = 0; i < nFinalAlunos; i++){
 		if(aluno_x[i].numAluno == numAlunoMarc){
 			limpaEcra();
@@ -872,10 +880,10 @@ scanf("%d", &numAlunoMarc);
 			}
 		}
 	}
-limpaEcra();
-listaAtivosInstrutores();
-printf("\nIntroduza o número do instrutor para marcar a aula: ");
-scanf("%d", &numInstrutorMarc);
+	limpaEcra();
+	listaAtivosInstrutores();
+	printf("\nIntroduza o número do instrutor para marcar a aula: ");
+	scanf("%d", &numInstrutorMarc);
 	for (i = 0; i < nFinalInstrutores; i++){
 		if(instrutores_x[i].numInstrutor == numInstrutorMarc){
 			limpaEcra();
@@ -890,12 +898,19 @@ scanf("%d", &numInstrutorMarc);
 					limpaEcra();
 					listaAtivosInstrutores();
 					printf("\nIntroduza o número do instrutor para marcar a aula: ");
+					scanf("%d", &numInstrutorMarc);
 					j = 0;	
 				}
 			}		
 		}
-	}    
-//pedir confirmação ao utilizador
+	}    	
+	for (i = 0; i < nFinalInstrutores; i++){
+		if(instrutores_x[i].numInstrutor == numInstrutorMarc){
+			limpaEcra();
+			printf("Escolheu Instrutor Número %d com o nome %s",instrutores_x[i].nomeInstrutor, instrutores_x[i].numInstrutor); 	//pedir confirmação ao utilizador
+		}
+	}
+//}while();
 limpaEcra();
 
 /*printf("-------- Tabela Instrutores --------\n\nn? Instrutor\tNome\t\t\t\tEmail");
