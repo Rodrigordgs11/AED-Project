@@ -3,6 +3,5 @@
 - marcações 
 - ordenar listagens por cod postal
 - listagem por uma certa idade
-- dados instrutor por de 2 em 2 por defeito
 - verificação de filtar por nome ex. 1 - rodas se meter 2 ele vai na mesma 
 
