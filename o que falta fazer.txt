@@ -1,5 +1,4 @@
 - verificação de data
-- split cod postal e juntar 4905-021 para 4905021
 - marcações 
 - ordenar listagens por cod postal
 - listagem por uma certa idade
