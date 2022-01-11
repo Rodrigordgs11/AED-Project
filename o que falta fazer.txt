@@ -3,4 +3,5 @@
 - ordenar listagens por cod postal
 - listagem por uma certa idade
 - verificação de filtar por nome ex. 1 - rodas se meter 2 ele vai na mesma 
+- fazer um dados alunos só de ativos tipo nFinalAlunos mas para os ativos para as aulas
 
