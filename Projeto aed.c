@@ -39,8 +39,9 @@ typedef struct DataAula{
 } DataAula;
 
 typedef struct Aulas{
-	int aluno;
 	int instrutor;
+	int aluno;
+	int hora;
 	int numAulas;
 } Aulas;
 
@@ -66,9 +67,6 @@ typedef struct Instrutores{
 	int ativoInstrutor;
 } Instrutores;
 
-typedef struct Marcacoes{
-	
-} Marcacoes;
 
 DataAula data_aula;
 Aluno aluno_x[30];
@@ -180,6 +178,7 @@ int escolhaAlunos;
 int escolhaListaAlunos;
 int escolhaListaInstrutores;
 int nAlunos, nFinalAlunos, nAtualAlunos = 0;
+int nAulas;
 
 
 /*@@@@ 					FUN??O MAIN                		 @@@@*/
@@ -194,7 +193,6 @@ int main(void) {
 //EM FALTA,  
 void Menu(){
     do{
-    	
     	printf("\n");
 		switch (MenuPrincipal()){
 		case 1:
@@ -1231,8 +1229,7 @@ void limpaEspera(){
 }
 
 void MarcacaoAula(){
-int numAlunoMarc;
-int numInstrutorMarc;
+int resMarc;
 limpaEcra();
 printf("--------- MARCAÇÃO DE UMA AULA ---------\n\n");
 printf("Introduza a hora da aula");
@@ -1243,9 +1240,9 @@ scanf("%d/%d/%d",&data_aula.dd, &data_aula.dd, &data_aula.aaaa);
 //IDEIA: IMPLEMENTAR COM SPLIT.   EX: 19H, 11/09/2020
 listaAtivosAlunos(); 	//tenho algo pensado melhor mas para testes chega 
 printf("\nIntroduza o número do aluno para marcar a aula: ");
-scanf("%d", &numAlunoMarc);
+scanf("%d", &aulas[nAulas].aluno);
 	for (i = 0; i < nFinalAlunos; i++){
-		if(aluno_x[i].numAluno == numAlunoMarc){
+		if(aluno_x[i].ativoAluno == 1 && aluno_x[i].numAluno == aulas[nAulas].aluno){
 			limpaEcra();
 			printf("\nEscolheu o aluno %s com o número %d", aluno_x[i].nomeAluno, aluno_x[i].numAluno);
 			sleep(3);
@@ -1254,33 +1251,37 @@ scanf("%d", &numAlunoMarc);
 limpaEcra();
 listaAtivosInstrutores();
 printf("\nIntroduza o número do instrutor para marcar a aula: ");
-scanf("%d", &numInstrutorMarc);
-for (i = 0; i < nFinalInstrutores; i++){
-	if(instrutores_x[i].numInstrutor == numInstrutorMarc){
-		limpaEcra();
-		printf("\nEscolheu o instrutor %s com o número %d", instrutores_x[i].nomeInstrutor, instrutores_x[i].numInstrutor);
-		sleep(3);
-	}
-}  
-  
-//pedir confirmação ao utilizador
+scanf("%d", &aulas[nAulas].instrutor);
+	for (i = 0; i < nFinalInstrutores; i++){
+		if(instrutores_x[i].ativoInstrutor == 1 && instrutores_x[i].numInstrutor == aulas[nAulas].instrutor){
+			limpaEcra();
+			printf("\nEscolheu o instrutor %s com o número %d", instrutores_x[i].nomeInstrutor, instrutores_x[i].numInstrutor);
+			sleep(3);
+		}
+	}  
 limpaEcra();
-for (i = 0; i < nFinalInstrutores; i++){
-	if(instrutores_x[i].numInstrutor == numInstrutorMarc){
+printf("AULA %d\nData: %d/%d/%d\nHora: %d", nAulas+1, data_aula.dd, data_aula.mm, data_aula.aaaa, data_aula.hora);
+	for (i = 0; i < nFinalAlunos; i++){
+			if(aluno_x[i].ativoAluno == 1 && aluno_x[i].numAluno == aulas[nAulas].aluno){
+				printf("\nAluno: %s - %d", aluno_x[i].nomeAluno, aluno_x[i].numAluno);
+			}
+		}
+	
+	for (i = 0; i < nFinalInstrutores; i++){
+		if(instrutores_x[i].ativoInstrutor == 1 && instrutores_x[i].numInstrutor == aulas[nAulas].instrutor){
+			printf("\nInstrutor: %s - %d", instrutores_x[i].nomeInstrutor, instrutores_x[i].numInstrutor);
+		}
+	}
+printf("\nTem a certeza que pretende marcar esta aula? (Esta marcação não poderá ser eliminada depois de aceite!)\nSim - 1\nNão - 2");
+scanf("%d", &resMarc);
+	if (resMarc == 1){
 		limpaEcra();
-		printf("\nEscolheu o instrutor %s com o número %d", instrutores_x[i].nomeInstrutor, instrutores_x[i].numInstrutor);
+		printf("Aula marcada com sucesso... A redirecionar...");
+		sleep(3);
+		nAulas++;
+	}else{
+		limpaEcra();
+		printf("Aula desmarcada com sucesso... A redirecionar...");
 		sleep(3);
 	}
-}
-	
-/*printf("-------- Tabela Instrutores --------\n\nn? Instrutor\tNome\t\t\t\tEmail");
-	for(i = 0; i < nFinalInstrutores; i++){
-		printf("\n%d\t\t\t\t%s\t\t%s\n",instrutores_x[i].numInstrutor,instrutores_x[i].nomeInstrutor,instrutores_x[i].emailInstrutor);
-	}
-	printf("-------- Tabela Alunos --------\n\nn?Aluno\t\tNome\t\t\t\tCartao de cidadao");
-		for(i = 0; i < nFinalAlunos; i++){
-    		if (aluno_x[i].ativoAluno == 1){
-			printf("\n%d\t\t\t%s\t\t\t%d\n",aluno_x[i].numAluno,aluno_x[i].nomeAluno,aluno_x[i].ccAluno);
-			}
-		}*/
 }
