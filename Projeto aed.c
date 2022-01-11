@@ -92,6 +92,7 @@ int MenuConsulta();
 int MenuListarAlunos();
 int MenuListarInstrutores();
 int MenuPesquisaAlunos();
+int MenuPesquisaInstrutores();
 
 //			FUN??ES ALUNOS 	
 	
@@ -113,10 +114,12 @@ void DadosAlunosAlteracao();
 
 void InserirInstrutores();
 void DadosInstrutores();
+void DadosInstrutoresAlteracao();
 void alterarInstrutor();
 void verificacaoCCInstrutor();
 void verificacaoEmailInstrutor();
 void listaAtivosInstrutores();
+void DadosInstrutorAlteracao();
 void listarPorNomeInstrutor();
 
 
@@ -269,7 +272,17 @@ void Menu(){
 				}
 		    break;
 		    case 3:
-		    	alterarInstrutor();
+		    	switch(MenuPesquisaInstrutores()){
+					limpaEcra();
+					case 1:
+						limpaEcra();
+		    			alterarInstrutor();
+					break;
+					case 2:
+						limpaEcra();
+						listarPorNomeInstrutor();
+					break;
+				}
 		    break;
 		    case 0:
         		limpaEcra();
@@ -380,6 +393,18 @@ int MenuPesquisaAlunos(){
         scanf("%d",&escolhaPesquisaAlunos);
     }while(escolhaPesquisaAlunos < 0 || escolhaPesquisaAlunos > 2);
     return escolhaPesquisaAlunos;
+}
+
+int MenuPesquisaInstrutores(){
+	int escolhaPesquisInstrutor;
+	do{
+        printf("--------- ALTERAÇÃO INSTRUTORES ---------\n");
+        printf(" 1 - Pesquisar Por Número Do INSTRUTOR\n");
+        printf(" 2 - Pesquisar Por Nome\n");
+        printf("Resposta: ");
+        scanf("%d",&escolhaPesquisInstrutor);
+    }while(escolhaPesquisInstrutor < 0 || escolhaPesquisInstrutor > 2);
+    return escolhaPesquisInstrutor;
 }
 
 int MenuListarInstrutores(){
@@ -530,6 +555,23 @@ void DadosAlunos(){
     }
 }
 
+void DadosInstrutoresAlteracao(){
+	printf("--------- LISTAGEM DE INSTRUTORES ---------\n\n");
+    
+        printf("--------- INSTRUTOR NÚMERO [ %d ] ---------\n", instrutores_x[resConsult].numInstrutor);
+        printf("\nInstrutor: %s", instrutores_x[resConsult].nomeInstrutor);
+        printf("\nCartão de cidadão: %d",instrutores_x[resConsult].ccInstrutor);
+        printf("\nEmail: %s",instrutores_x[resConsult].emailInstrutor);
+        printf("\nAno de entrada na escola de condução: %d/%d/%d",instrutores_x[resConsult].dataEntrada.dd, instrutores_x[resConsult].dataEntrada.mm, instrutores_x[resConsult].dataEntrada.aaaa);
+        if (instrutores_x[resConsult].ativoInstrutor == 1){
+            	printf ("\nAtivo: Instrutor Ativo");
+			}else{
+				printf("\nAtivo: Instrutor Não Ativo");
+		}
+        printf("\n\n");
+    
+}
+
 void DadosAlunosAlteracao(){
 	printf("--------- LISTAGEM DE ALUNOS ---------\n\n");
     
@@ -560,6 +602,7 @@ void DadosAlunosAlteracao(){
         printf("\n\n");
     
 }
+
 
 void InserirInstrutores(){
     printf("--------- INSERIR INSTRUTORES ---------\n");
@@ -872,7 +915,7 @@ void alterarInstrutor(){
         switch(respostaAlterarInstrutor){
             case 1 :
                 printf("\nNome: ");
-                scanf(" %30[^\n]s", instrutores_x[instrutorEcontrado].nomeInstrutor);
+                scanf(" %30[^\n]s", instrutores_x[i].nomeInstrutor);
                 limpaEcra();
             break;
             case 2 :
@@ -906,16 +949,16 @@ void alterarInstrutorNome(){
     int instrutorEcontrado, respostaAlterarInstrutor, numInstrutor;
     int flgInstrutor = 0;
     for(i = 0; i < nFinalInstrutores; i++){
-        if(instrutores_x[i].numInstrutor == numInstrutor){
+        if(instrutores_x[i].numInstrutor == resConsult){
             flgInstrutor = 1;
-            printf("\n Aluno Encontrado --- [ %d ]", instrutores_x[i].numInstrutor);
-            printf("\n 1) Nome: %s", instrutores_x[i].nomeInstrutor );
-            printf("\n 2) Cartão de cidadão: %d", instrutores_x[i].ccInstrutor);
-            printf("\n 3) EMAIL: %s", instrutores_x[i].emailInstrutor );
-            printf("\n 4) Ano De Entrada Na Escola De Condução: %d/%d/%d", instrutores_x[i].dataEntrada.dd, instrutores_x[i].dataEntrada.mm, instrutores_x[i].dataEntrada.aaaa);
-            printf("\n 5) Ativo: %d", instrutores_x[i].ativoInstrutor);
+            printf("\n Aluno Encontrado --- [ %d ]", instrutores_x[resConsult].numInstrutor);
+            printf("\n 1) Nome: %s", instrutores_x[resConsult].nomeInstrutor );
+            printf("\n 2) Cartão de cidadão: %d", instrutores_x[resConsult].ccInstrutor);
+            printf("\n 3) EMAIL: %s", instrutores_x[resConsult].emailInstrutor );
+            printf("\n 4) Ano De Entrada Na Escola De Condução: %d/%d/%d", instrutores_x[resConsult].dataEntrada.dd, instrutores_x[resConsult].dataEntrada.mm, instrutores_x[resConsult].dataEntrada.aaaa);
+            printf("\n 5) Ativo: %d", instrutores_x[resConsult].ativoInstrutor);
             printf("\n -------------------------");
-            instrutorEcontrado = i;
+            instrutorEcontrado = resConsult;
         }
     }
 
@@ -1134,7 +1177,7 @@ void listarPorNomeAluno(){
 }
 
 void listarPorNomeInstrutor(){
-    int resAltera, resConsult, numListarNome = 1, ids[30], flg = 0;
+    int resAltera, numListarNome = 1, ids[30], flg = 0;
     char nome[20];
     limpaEcra();
     printf ("\nInsira o nome do aluno que pretende consultar: ");
@@ -1153,7 +1196,7 @@ void listarPorNomeInstrutor(){
     }
     if(flg == 1){
     	printf("--------- DADOS INSTRUTORES QUE CONTEM '%s' ---------\n\n", nome);
-        for(i = 0; i < nFinalAlunos; i++){
+        for(i = 0; i < nFinalInstrutores; i++){
             if (strstr(instrutores_x[i].nomeInstrutor, nome)){
                 printf("\n%d - %s", numListarNome, instrutores_x[i].nomeInstrutor);
                 //posicao de cada aluno no array que corresponde a pesquisa
@@ -1166,11 +1209,12 @@ void listarPorNomeInstrutor(){
         scanf("%d", &resConsult);
         fflush(stdin);
         if(resConsult != 0){
-            DadosInstrutores(ids[resConsult]); //posição do aluno no array
+        	resConsult = resConsult-1; 
+            DadosInstrutoresAlteracao(); //posição do aluno no array
             printf("\nPretende alterar este aluno?\n1 - (Sim)\n0 - Não\nResposta: ");
             scanf("%d", &resAltera);
             if(resAltera == 1){
-                alterarInstrutor(ids[resConsult]);
+                alterarInstrutorNome();
             }else{
             	limpaEcra();
 			}
