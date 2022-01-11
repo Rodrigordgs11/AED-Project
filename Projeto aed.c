@@ -781,7 +781,7 @@ void alterarAlunoNome(){
     int alunoEcontrado, respostaAlterarAluno, numAluno;
     int flgAluno = 0;	
     for(i = 0;i < nFinalAlunos; i++){
-        if(aluno_x[i].numAluno == resConsult){
+        if(aluno_x[i].numAluno == resConsult+1){
         	
             flgAluno = 1;
             printf("\n Aluno Encontrado --- [ %d ]", aluno_x[resConsult].numAluno);
@@ -879,7 +879,7 @@ void alterarAlunoNome(){
         }
     }
     else{
-        printf("\n -- Aluno Não Encontrado --");
+        printf("\n -- Aluno Não Encontrado --%d  %d",i,resConsult);
     }
 }
 
@@ -949,7 +949,7 @@ void alterarInstrutorNome(){
     int instrutorEcontrado, respostaAlterarInstrutor, numInstrutor;
     int flgInstrutor = 0;
     for(i = 0; i < nFinalInstrutores; i++){
-        if(instrutores_x[i].numInstrutor == resConsult){
+        if(instrutores_x[i].numInstrutor == resConsult+1){
             flgInstrutor = 1;
             printf("\n Aluno Encontrado --- [ %d ]", instrutores_x[resConsult].numInstrutor);
             printf("\n 1) Nome: %s", instrutores_x[resConsult].nomeInstrutor );
@@ -1129,7 +1129,7 @@ void listaAtivosInstrutores(){
 }
 
 void listarPorNomeAluno(){
-    int resAltera, numListarNome = 1, ids[30], flg = 0;
+    int resAltera=NULL, numListarNome = 1, ids[30], flg = 0;
     char nome[20];
     limpaEcra();
     printf ("\nInsira o nome do aluno que pretende consultar: ");
