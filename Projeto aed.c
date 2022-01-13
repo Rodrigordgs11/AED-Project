@@ -91,6 +91,7 @@ int MenuListarAlunos();
 int MenuListarInstrutores();
 int MenuPesquisaAlunos();
 int MenuPesquisaInstrutores();
+int menuListarMarcacoes();
 
 //			FUN??ES ALUNOS 	
 	
@@ -124,7 +125,10 @@ void listarPorNomeInstrutor();
 //			FUN??ES MARCA??ES
 
 void MarcacaoAula();
-void subMenu3_esc2();
+void listarMarcacao();
+void listarMarcacaoAluno();
+void listarMarcacaoInstrutor();
+void listarMarcacaoDia();
 
 /* variaveis*/
 int flag = 0;
@@ -178,7 +182,7 @@ int escolhaAlunos;
 int escolhaListaAlunos;
 int escolhaListaInstrutores;
 int nAlunos, nFinalAlunos, nAtualAlunos = 0;
-int nAulas;
+int nAulas = 0;
 
 
 /*@@@@ 					FUN??O MAIN                		 @@@@*/
@@ -294,9 +298,24 @@ void Menu(){
 		        MarcacaoAula();
 		    break;
 		    case 2:
-		    //listar MARCA??ES
-		        limpaEcra();
-		        subMenu3_esc2();
+		    switch(menuListarMarcacoes()){
+		    	case 1:
+		    		limpaEcra();
+		        	listarMarcacao();
+		    	break;
+		    	case 2:
+		    		limpaEcra();
+		    		listarMarcacaoAluno();
+		    	break;
+		    	case 3:
+		    		limpaEcra();
+		    		listarMarcacaoInstrutor();
+		    	break;
+		    	case 4:
+		    		limpaEcra();
+		    		listarMarcacaoDia();
+		    	break;
+			}
 		    break;
 		    case 0:
         		limpaEcra();
@@ -373,7 +392,7 @@ int MenuListarAlunos(){
         printf(" 1 - Listar Todos Os Alunos\n");
         printf(" 2 - Listar Alunos Ativos\n");
         printf(" 3 - Listar Alunos Com Carta De Condução\n");
-        printf(" 4 - Listar Alunos Com Mais/Menos de 18 Anos\n");
+        printf(" 4 - Listar Alunos Com Uma Certa Idade\n");
         printf(" 0 - Sair\n");
         printf("Resposta: ");
         scanf("%d",&escolhaListaAlunos);
@@ -415,6 +434,21 @@ int MenuListarInstrutores(){
         scanf("%d",&escolhaListaInstrutores);
     }while(escolhaListaInstrutores < 0 || escolhaListaInstrutores > 2);
     return escolhaListaInstrutores;
+}
+
+int menuListarMarcacoes(){
+	int escolhaMenuListarMarcacoes;
+	do{
+        printf("--------- LISTAGEM DE MARCAÇÕES ---------\n");
+        printf(" 1 - Listar Todas As Marcações\n");
+        printf(" 2 - Listar Marcações Por Dia\n");
+        printf(" 3 - Listar Marcações Por Aluno\n");
+        printf(" 4 - Listar Marcações Por Instrutor\n");
+        printf(" 0 - Sair\n");
+        printf("Resposta: ");
+        scanf("%d",&escolhaMenuListarMarcacoes);
+    }while(escolhaMenuListarMarcacoes < 0 || escolhaMenuListarMarcacoes > 4);
+    return escolhaMenuListarMarcacoes;
 }
 
 void InserirAlunos(){
@@ -1275,13 +1309,42 @@ printf("AULA %d\nData: %d/%d/%d\nHora: %d", nAulas+1, data_aula.dd, data_aula.mm
 printf("\nTem a certeza que pretende marcar esta aula? (Esta marcação não poderá ser eliminada depois de aceite!)\nSim - 1\nNão - 2");
 scanf("%d", &resMarc);
 	if (resMarc == 1){
+		nAulas++;
 		limpaEcra();
 		printf("Aula marcada com sucesso... A redirecionar...");
 		sleep(3);
-		nAulas++;
 	}else{
 		limpaEcra();
 		printf("Aula desmarcada com sucesso... A redirecionar...");
 		sleep(3);
 	}
+}
+
+void listarMarcacao(){
+	for (i = 0; i < nAulas; i++){
+		printf("--------- LISTAGEM DE MARCAÇÕES ---------");
+		printf("--------- AULA NÚMERO [ %d ] ---------\n", nAulas);
+		for (j = 0; j < nFinalAlunos; j++){
+			if(aluno_x[j].ativoAluno == 1 && aluno_x[j].numAluno == aulas[i].aluno){
+				limpaEcra();
+				printf("\nEscolheu o aluno %s com o número %d", aluno_x[j].nomeAluno, aluno_x[j].numAluno);
+			}
+		}
+		for (j = 0; j < nFinalInstrutores; j++){
+			if(instrutores_x[j].ativoInstrutor == 1 && instrutores_x[j].numInstrutor == aulas[i].instrutor){
+				printf("\nEscolheu o instrutor %s com o número %d", instrutores_x[j].nomeInstrutor, instrutores_x[j].numInstrutor);
+			}
+		}	 
+	}
+}
+
+void listarMarcacaoDia(){
+  printf("");
+}
+
+void listarMarcacaoAluno(){
+  printf("");
+}
+void listarMarcacaoInstrutor(){
+  printf("");
 }
