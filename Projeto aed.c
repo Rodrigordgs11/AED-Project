@@ -68,7 +68,7 @@ typedef struct Instrutores{
 } Instrutores;
 
 
-DataAula data_aula;
+DataAula data_aula[100];
 Aluno aluno_x[30];
 Instrutores instrutores_x[10];
 Aulas aulas[100];
@@ -225,7 +225,7 @@ void Menu(){
 			  	break;
 			    case 4:
 			    	limpaEcra();
-			        DadosAlunos();	
+			        listaMais18AnosAlunos();	
 			    break;
 			    case 0:
 	        		limpaEcra();
@@ -688,9 +688,6 @@ void DadosInstrutores(){
     }
 }
 
-void subMenu3_esc2(){
-    
-}
 
 void limpaEcra(){
     system("clear||cls");
@@ -1137,10 +1134,6 @@ void listaCartaConducaoAlunos(){
 	}
 }
 
-void listaMais18AnosAlunos(){
-	 
-}
-
 void listaAtivosInstrutores(){
 	printf("--------- LISTAGEM DE INSTRUTORES ATIVOS ---------\n\n");
 	for(i = 0; i < nFinalInstrutores; i++){
@@ -1265,11 +1258,14 @@ void limpaEspera(){
 void MarcacaoAula(){
 int resMarc;
 limpaEcra();
+nAulas++;
 printf("--------- MARCAÇÃO DE UMA AULA ---------\n\n");
-printf("Introduza a hora da aula");
-scanf("%d",&data_aula.hora);
-printf("Introduza a data da aula");
-scanf("%d/%d/%d",&data_aula.dd, &data_aula.dd, &data_aula.aaaa);
+	for (i =0; i < nAulas; i++){
+		printf("Introduza a hora da aula: ");
+		scanf("%d",&data_aula[i].hora);
+		printf("Introduza a data da aula: ");
+		scanf("%d/%d/%d",&data_aula[i].dd, &data_aula[i].dd, &data_aula[i].aaaa);
+	}
 //IDEIA: LIMPAR A VARIAVEL
 //IDEIA: IMPLEMENTAR COM SPLIT.   EX: 19H, 11/09/2020
 listaAtivosAlunos(); 	//tenho algo pensado melhor mas para testes chega 
@@ -1294,13 +1290,14 @@ scanf("%d", &aulas[nAulas].instrutor);
 		}
 	}  
 limpaEcra();
-printf("AULA %d\nData: %d/%d/%d\nHora: %d", nAulas+1, data_aula.dd, data_aula.mm, data_aula.aaaa, data_aula.hora);
+	for (i =0; i < nAulas; i++){
+		printf("AULA %d\nData: %d/%d/%d\nHora: %d", nAulas, data_aula[i].dd, data_aula[i].mm, data_aula[i].aaaa, data_aula[i].hora);
+	}
 	for (i = 0; i < nFinalAlunos; i++){
 			if(aluno_x[i].ativoAluno == 1 && aluno_x[i].numAluno == aulas[nAulas].aluno){
 				printf("\nAluno: %s - %d", aluno_x[i].nomeAluno, aluno_x[i].numAluno);
 			}
 		}
-	
 	for (i = 0; i < nFinalInstrutores; i++){
 		if(instrutores_x[i].ativoInstrutor == 1 && instrutores_x[i].numInstrutor == aulas[nAulas].instrutor){
 			printf("\nInstrutor: %s - %d", instrutores_x[i].nomeInstrutor, instrutores_x[i].numInstrutor);
@@ -1309,11 +1306,11 @@ printf("AULA %d\nData: %d/%d/%d\nHora: %d", nAulas+1, data_aula.dd, data_aula.mm
 printf("\nTem a certeza que pretende marcar esta aula? (Esta marcação não poderá ser eliminada depois de aceite!)\nSim - 1\nNão - 2");
 scanf("%d", &resMarc);
 	if (resMarc == 1){
-		nAulas++;
 		limpaEcra();
 		printf("Aula marcada com sucesso... A redirecionar...");
 		sleep(3);
 	}else{
+		nAulas--;
 		limpaEcra();
 		printf("Aula desmarcada com sucesso... A redirecionar...");
 		sleep(3);
@@ -1322,11 +1319,10 @@ scanf("%d", &resMarc);
 
 void listarMarcacao(){
 	for (i = 0; i < nAulas; i++){
-		printf("--------- LISTAGEM DE MARCAÇÕES ---------");
+		printf("--------- LISTAGEM DE MARCAÇÕES ---------\n");
 		printf("--------- AULA NÚMERO [ %d ] ---------\n", nAulas);
 		for (j = 0; j < nFinalAlunos; j++){
 			if(aluno_x[j].ativoAluno == 1 && aluno_x[j].numAluno == aulas[i].aluno){
-				limpaEcra();
 				printf("\nEscolheu o aluno %s com o número %d", aluno_x[j].nomeAluno, aluno_x[j].numAluno);
 			}
 		}
@@ -1334,12 +1330,24 @@ void listarMarcacao(){
 			if(instrutores_x[j].ativoInstrutor == 1 && instrutores_x[j].numInstrutor == aulas[i].instrutor){
 				printf("\nEscolheu o instrutor %s com o número %d", instrutores_x[j].nomeInstrutor, instrutores_x[j].numInstrutor);
 			}
-		}	 
+		}
+	//	printf("\nData: %d/%d/%d\nHora: %d", data_aula[i].dd, data_aula[i].mm, data_aula[i].aaaa, data_aula[i].hora);	 
 	}
 }
 
 void listarMarcacaoDia(){
-  printf("");
+/*  int dia,mes,ano; 
+  printf("Introduza o dia que quer fazer a listagem das aulas. (Insira a dara no seguinte formato (dd/mm/aaaa): ");
+  scanf("%d/%d/%d",&dia, &mes, &ano);
+  for (i =0; i < nAulas;i++){
+  	if(ano == && mes == && dia == dia do array){
+  		printf("--------- LISTAGEM DE MARCAÇÕES POR DIA ---------");
+		printf("--------- AULA NÚMERO [ %d ] ---------\n", nAulas);
+  		printf("\nData: %d/%d/%d\nHora: %d", data_aula.dd, data_aula.mm, data_aula.aaaa, data_aula.hora);
+  		printf("");
+  	}
+  }
+ */ 
 }
 
 void listarMarcacaoAluno(){
@@ -1347,4 +1355,48 @@ void listarMarcacaoAluno(){
 }
 void listarMarcacaoInstrutor(){
   printf("");
+}
+
+void listaMais18AnosAlunos(){
+   int dia_atual;
+   int mes_atual;
+   int ano_atual;
+   int idade;
+    printf("indique o seu dia atual: ");
+    scanf("%d",&dia_atual);
+    printf("indique o seu mes atual: ");
+    scanf("%d",&mes_atual);
+    printf("indique o seu ano atual: ");
+    scanf("%d",&ano_atual);
+    printf("indique a idade que filtar a listagem: ");
+    scanf("%d",&idade);
+   age(dia_atual, mes_atual, ano_atual, idade);
+   return 0;
+}
+
+void age(int dia_atual, int mes_atual, int ano_atual, int idade) {
+   int dia_cont[30], mes_cont[30], ano_cont[30], contagem = 0;
+   int month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+   for (i = 0; i < nFinalAlunos; i++){
+	   	if (aluno_x[i].dataNascimento.dd > aluno_x[i].dataNascimento.dd){
+	      dia_atual = dia_atual + month[aluno_x[i].dataNascimento.mm - 1];
+	      mes_atual = mes_atual - 1;
+	    }
+	    if (aluno_x[i].dataNascimento.mm > mes_atual) {
+	      ano_atual = ano_atual - 1;
+	      mes_atual = mes_atual + 12;
+	    }
+	    dia_cont[i] = dia_atual - aluno_x[i].dataNascimento.dd;
+	    mes_cont[i] = mes_atual - aluno_x[i].dataNascimento.mm;
+	    ano_cont[i] = ano_atual - aluno_x[i].dataNascimento.aaaa;
+	    for (j = 0; j < nFinalAlunos; j++){
+		    if(ano_cont[j] >= idade){
+		    	contagem++;
+		   		DadosAlunos();
+		    }
+		    if(contagem == 0){
+		    	printf("Nenhum aluno encontrado com %d anos de ou idade superior", idade);	
+			}
+		}
+	}
 }
