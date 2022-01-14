@@ -10,7 +10,7 @@ typedef struct Morada{
     char rua[30];
     char porta[30];
     char codigoPostal[8];
-    char codigoPostal_[8];
+    int codigoPostal_;
     char localidade[30];
 } Morada;
 
@@ -453,6 +453,7 @@ int menuListarMarcacoes(){
 
 void InserirAlunos(){
 	int tamanho[30];
+	int val;
     printf("--------- INSERIR ALUNOS ---------\n");
     printf ("\nIntroduza o número de alunos que pretende inserir: ");
     scanf ("%d", &nAlunos);
@@ -479,8 +480,9 @@ void InserirAlunos(){
 			size_t final_cod = divCodPostalAluno (CodSplit, dividirCodPostal);
 			
 			strcat(&DadosCod[1][0],&DadosCod[2][0]);
-			strcpy(&aluno_x[i].morada.codigoPostal_, &DadosCod[1][0]);
-			printf("Código de postal partido %s", aluno_x[i].morada.codigoPostal_);
+			val = atoi(&DadosCod[1][0]);
+			strcpy(&aluno_x[i].morada.codigoPostal_, &val);
+			printf("Código de postal partido %d", aluno_x[i].morada.codigoPostal_);
 			
             /*printf("\nIntroduza a rua: ");
             scanf(" %30[^\n]s", &aluno_x[i].morada.rua);
@@ -543,15 +545,15 @@ void ordenarCodPostal(){
 	for (i = 0; i < nFinalAlunos -1;i++){
 		for (j = 0; j < nFinalAlunos -1 -i;j++){
 			if(aluno_x[j].morada.codigoPostal_ > aluno_x[j+1].morada.codigoPostal_){
-				strcpy(temp , aluno_x[j].morada.codigoPostal_);
-				strcpy(aluno_x[j].morada.codigoPostal_, aluno_x[j+1].morada.codigoPostal_);
-				strcpy (aluno_x[j+1].morada.codigoPostal_, temp);
+				temp = aluno_x[j].morada.codigoPostal_;
+				aluno_x[j].morada.codigoPostal_= aluno_x[j+1].morada.codigoPostal_;
+				aluno_x[j+1].morada.codigoPostal_ = temp;
 			}
 		}
 	}
 
 for (i = 0; i < nFinalAlunos;i++){
-	printf("\n %d", aluno_x[j].morada.codigoPostal_);
+	printf("\n %d", aluno_x[i].morada.codigoPostal_);
 }
 }
 
