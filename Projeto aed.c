@@ -1373,32 +1373,46 @@ void listaMais18AnosAlunos(){
     printf("indique a idade que filtar a listagem: ");
     scanf("%d",&idade);
    age(dia_atual, mes_atual, ano_atual, idade);
-   return 0;
 }
 
 void age(int dia_atual, int mes_atual, int ano_atual, int idade) {
    int dia_cont[30], mes_cont[30], ano_cont[30], contagem = 0;
    int month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
    for (i = 0; i < nFinalAlunos; i++){
-	   	if (aluno_x[i].dataNascimento.dd > aluno_x[i].dataNascimento.dd){
-	      dia_atual = dia_atual + month[aluno_x[i].dataNascimento.mm - 1];
-	      mes_atual = mes_atual - 1;
-	    }
-	    if (aluno_x[i].dataNascimento.mm > mes_atual) {
-	      ano_atual = ano_atual - 1;
-	      mes_atual = mes_atual + 12;
-	    }
-	    dia_cont[i] = dia_atual - aluno_x[i].dataNascimento.dd;
-	    mes_cont[i] = mes_atual - aluno_x[i].dataNascimento.mm;
-	    ano_cont[i] = ano_atual - aluno_x[i].dataNascimento.aaaa;
-	    for (j = 0; j < nFinalAlunos; j++){
-		    if(ano_cont[j] >= idade){
-		    	contagem++;
-		   		DadosAlunos();
-		    }
-		    if(contagem == 0){
-		    	printf("Nenhum aluno encontrado com %d anos de ou idade superior", idade);	
-			}
-		}
-	}
+        dia_cont[i] = dia_atual - aluno_x[i].dataNascimento.dd;
+        mes_cont[i] = mes_atual - aluno_x[i].dataNascimento.mm;
+        ano_cont[i] = ano_atual - aluno_x[i].dataNascimento.aaaa;
+            if(ano_cont[i] >= idade){
+                contagem=1;
+                printf("--------- ALUNO NÚMERO [ %d ] ---------\n", aluno_x[i].numAluno);
+                //printf ("\nAluno: %d", aluno_x[i].numAluno);
+                printf ("\nNome: %s", aluno_x[i].nomeAluno);
+                printf ("\nData Nascimento: %d/%d/%d", aluno_x[i].dataNascimento.dd, aluno_x[i].dataNascimento.mm, aluno_x[i].dataNascimento.aaaa);
+                printf ("\nCartão De Cidadão: %d", aluno_x[i].ccAluno);
+                printf ("\nNif: %d", aluno_x[i].nif);
+                if (aluno_x[i].numeroCarta == 0){
+                    printf ("\nData Conclusão: Não data de Conclusão");
+                }else{
+                    printf ("\nData Conclusão: %d/%d/%d", aluno_x[i].dataConclusao.dd, aluno_x[i].dataConclusao.mm, aluno_x[i].dataConclusao.aaaa);
+                }
+                
+                if (aluno_x[i].numeroCarta == 0){
+                    printf ("\nNúmero Carta: Não existe número de carta");
+                }else{
+                    printf ("\nNúmero Carta: %d", aluno_x[i].numeroCarta);
+                }
+                
+                if (aluno_x[i].ativoAluno == 1){
+                    printf ("\nAtivo: Aluno Ativo");
+                }else{
+                    printf("\nAtivo: Aluno Não Ativo");
+                }
+                printf("\nMorada: %s,%s,%s,%s",aluno_x[i].morada.rua,aluno_x[i].morada.porta,aluno_x[i].morada.codigoPostal,aluno_x[i].morada.localidade);
+                printf("\n\n");
+            }
+            }
+    if(contagem == 0){
+        printf("Nenhum aluno encontrado com %d anos de ou idade superior\n", idade);
+        printf(" %d\n", ano_cont[i]);
+    }
 }
