@@ -6,7 +6,6 @@
 #include <unistd.h>
 #include <locale.h>
 typedef struct Morada{
-	char DadosMorada[30];
     char rua[30];
     char porta[30];
     char codigoPostal[8];
@@ -14,22 +13,11 @@ typedef struct Morada{
     char localidade[30];
 } Morada;
 
-typedef struct DataNascimento{
+typedef struct Data{
     int aaaa;
     int mm;
     int dd;
-} DataNascimento;
-
-typedef struct DataConclusao{
-    int aaaa;
-    int mm;
-    int dd;
-} DataConclusao;
-typedef struct DataEntrada{
-	int aaaa;
-    int mm;
-    int dd;
-} DataEntrada;
+} Data;
 
 typedef struct DataAula{
 	int hora;
@@ -39,6 +27,7 @@ typedef struct DataAula{
 } DataAula;
 
 typedef struct Aulas{
+	DataAula data_aula;
 	int instrutor;
 	int aluno;
 	int hora;
@@ -50,10 +39,10 @@ typedef struct Aluno{
     Morada morada;
     int numAluno;
     char nomeAluno[30];
-    DataNascimento dataNascimento;
+    Data dataNascimento;
     int ccAluno;
     int nif;
-    DataConclusao dataConclusao;
+    Data dataConclusao;
     int numeroCarta;
     int ativoAluno;
 } Aluno;
@@ -63,12 +52,12 @@ typedef struct Instrutores{
     char nomeInstrutor[30];
     int ccInstrutor;
     char emailInstrutor[30];
-    DataEntrada dataEntrada;
+    Data dataEntrada;
 	int ativoInstrutor;
 } Instrutores;
 
 
-DataAula data_aula[100];
+
 Aluno aluno_x[30];
 Instrutores instrutores_x[10];
 Aulas aulas[100];
@@ -126,19 +115,14 @@ void listarPorNomeInstrutor();
 //			FUN??ES MARCA??ES
 
 void MarcacaoAula();
-void listarMarcacao();
 void listarMarcacaoAluno();
 void listarMarcacaoInstrutor();
 void listarMarcacaoDia();
 
 /* variaveis*/
-int flag = 0;
 char dividirMorada[] = ",";
-char dividirCodPostal[] = "-";
-char moradaSplit[30][70];
-char CodSplit[30][70];
+char moradaSplit[70];
 char DadosMorada[30][30];
-char DadosCod[30][70];
 int resConsult;
 
 // 			SPLIT MORADA
@@ -155,34 +139,17 @@ size_t divMoradaAluno(char *moradaSplit, char *dividirMorada){
   return 0;
 }
 
-size_t divCodPostalAluno(char *CodSplit, char *dividirCodPostal){
-  char *ptrCod;
-  ptrCod = strtok (CodSplit,dividirCodPostal); 		//a morada ? dividida por virgulas e guarda no apontador ptrMorada
-  int i = 0;
-  while (ptrCod!= NULL){				//enquanto houver virgulas para partir ele parte quando a frase acaba da return 
-    strcpy(DadosCod[++i], ptrCod);
-    ptrCod = strtok (NULL, dividirCodPostal);
-  }
-  return 0;
-}
-
-
 // DECLARA??O DE VARI?VEIS E DE CONSTANTES
-int escolhaPrincipal;
-int taxmanho[30];
+
+int nAlunos, nFinalAlunos, nAtualAlunos = 0;
+
 //VARIAVEIS INSTRUTORES
 
 int nInstrutores, nAtualInstrutores = 0, nFinalInstrutores;
-int escolhaInstrutores;
 int i,j;
-int resAlunos,respConcluCarta;
+
 //VARIAVEIS MARCA??O
 
-int escolhaMarcacao;
-int escolhaAlunos;
-int escolhaListaAlunos;
-int escolhaListaInstrutores;
-int nAlunos, nFinalAlunos, nAtualAlunos = 0;
 int nAulas = 0;
 
 
@@ -197,6 +164,7 @@ int main(void) {
 
 //EM FALTA,  
 void Menu(){
+	int escolhaPrincipal;
     do{
     	printf("\n");
 		switch (MenuPrincipal()){
@@ -210,7 +178,6 @@ void Menu(){
 			case 2:
 		    	limpaEcra();
 		    	switch(MenuListarAlunos()){
-		    	limpaEcra();
 			    case 1:
 			    	limpaEcra();
 			        DadosAlunos();	
@@ -233,8 +200,8 @@ void Menu(){
 				}		        	
 	    	break;
 			case 3:
+			limpaEcra();
 				switch(MenuPesquisaAlunos()){
-					limpaEcra();
 					case 1:
 						limpaEcra();
 		    			alterarAluno();
@@ -251,7 +218,7 @@ void Menu(){
 	    	}	
 		break;
     	case 2:
-	    	limpaEcra();
+    	limpaEcra();
 		    switch (MenuInstrutores()){
 		    case 1:
 				limpaEcra();
@@ -274,8 +241,8 @@ void Menu(){
 				}
 		    break;
 		    case 3:
+		    limpaEcra();
 		    	switch(MenuPesquisaInstrutores()){
-					limpaEcra();
 					case 1:
 						limpaEcra();
 		    			alterarInstrutor();
@@ -301,7 +268,7 @@ void Menu(){
 		    switch(menuListarMarcacoes()){
 		    	case 1:
 		    		limpaEcra();
-		        	listarMarcacao();
+		    		listarMarcacaoDia();
 		    	break;
 		    	case 2:
 		    		limpaEcra();
@@ -310,10 +277,6 @@ void Menu(){
 		    	case 3:
 		    		limpaEcra();
 		    		listarMarcacaoInstrutor();
-		    	break;
-		    	case 4:
-		    		limpaEcra();
-		    		listarMarcacaoDia();
 		    	break;
 			}
 		    break;
@@ -333,6 +296,7 @@ void Menu(){
 }
 
 int MenuPrincipal(){
+	int escolhaPrincipal;
 	do{
 		printf("--------- MENU PRINCIPAL ---------\n");
 		printf(" 1 - Gestão de Alunos\n");
@@ -346,6 +310,7 @@ int MenuPrincipal(){
 }
 
 int MenuAlunos(){
+	int escolhaAlunos;
     do{
        printf("--------- GESTÃO DE ALUNOS ---------\n");
         printf(" 1 - Inserir Alunos\n");
@@ -360,6 +325,7 @@ int MenuAlunos(){
 }
 
 int MenuInstrutores(){
+	int escolhaInstrutores;
     do{
         printf("--------- GESTÃO DE INSTRUTORES ---------\n");
         printf(" 1 - Inserir Instrutores\n");
@@ -374,6 +340,7 @@ int MenuInstrutores(){
 }
 
 int MenuConsulta(){
+	int escolhaMarcacao;
     do{
         printf("--------- MARCAÇÃO/CONSULTAS DE AULAS ---------\n");
         printf(" 1 - Inserir Marcação\n");
@@ -387,6 +354,7 @@ int MenuConsulta(){
 }
 
 int MenuListarAlunos(){
+	int escolhaListaAlunos;
 	do{
         printf("--------- LISTAGEM DE ALUNOS ---------\n");
         printf(" 1 - Listar Todos Os Alunos\n");
@@ -425,6 +393,7 @@ int MenuPesquisaInstrutores(){
 }
 
 int MenuListarInstrutores(){
+	int escolhaListaInstrutores;
 	do{
         printf("--------- LISTAGEM DE INSTRUTORES ---------\n");
         printf(" 1 - Listar Todos Os Instrutores\n");
@@ -440,20 +409,21 @@ int menuListarMarcacoes(){
 	int escolhaMenuListarMarcacoes;
 	do{
         printf("--------- LISTAGEM DE MARCAÇÕES ---------\n");
-        printf(" 1 - Listar Todas As Marcações\n");
-        printf(" 2 - Listar Marcações Por Dia\n");
-        printf(" 3 - Listar Marcações Por Aluno\n");
-        printf(" 4 - Listar Marcações Por Instrutor\n");
+        printf(" 1 - Listar Marcações Por Dia\n");
+        printf(" 2 - Listar Marcações Por Aluno\n");
+        printf(" 3 - Listar Marcações Por Instrutor\n");
         printf(" 0 - Sair\n");
         printf("Resposta: ");
         scanf("%d",&escolhaMenuListarMarcacoes);
-    }while(escolhaMenuListarMarcacoes < 0 || escolhaMenuListarMarcacoes > 4);
+    }while(escolhaMenuListarMarcacoes < 0 || escolhaMenuListarMarcacoes > 3);
     return escolhaMenuListarMarcacoes;
 }
 
 void InserirAlunos(){
+	int respConcluCarta;
 	int tamanho[30];
 	int val;
+	char snum[20];
     printf("--------- INSERIR ALUNOS ---------\n");
     printf ("\nIntroduza o número de alunos que pretende inserir: ");
     scanf ("%d", &nAlunos);
@@ -471,41 +441,23 @@ void InserirAlunos(){
             scanf(" %30[^\n]s", moradaSplit);
             size_t final = divMoradaAluno (moradaSplit, dividirMorada);
 
-            strcpy(&aluno_x[i].morada.rua, &DadosMorada[1][0]);		//copia a 1 parcela do array para o vetor rua 
-            strcpy(&aluno_x[i].morada.porta, &DadosMorada[2][0]);		//copia a 2 parcela do array para o vetor porta 
-            strcpy(&aluno_x[i].morada.codigoPostal, &DadosMorada[3][0]);	//copia a 3 parcela do array para o vetor codigoPostal 
-            strcpy(&aluno_x[i].morada.localidade, &DadosMorada[4][0]);	//copia a 4 parcela do array para o vetor localidade 
+            strcpy(aluno_x[i].morada.rua, &DadosMorada[1][0]);		//copia a 1 parcela do array para o vetor rua 
+            strcpy(aluno_x[i].morada.porta, &DadosMorada[2][0]);		//copia a 2 parcela do array para o vetor porta 
+            strcpy(aluno_x[i].morada.codigoPostal, &DadosMorada[3][0]);	//copia a 3 parcela do array para o vetor codigoPostal 
+            strcpy(aluno_x[i].morada.localidade, &DadosMorada[4][0]);	//copia a 4 parcela do array para o vetor localidade 
             
-			strcpy(&CodSplit , &DadosMorada[3][0]);
-			size_t final_cod = divCodPostalAluno (CodSplit, dividirCodPostal);
+			//strcpy(CodSplit , &DadosMorada[3][0]);
+			//size_t final_cod = divCodPostalAluno (CodSplit, dividirCodPostal);
 			
-			strcat(&DadosCod[1][0],&DadosCod[2][0]);
-			val = atoi(&DadosCod[1][0]);
-			strcpy(&aluno_x[i].morada.codigoPostal_, &val);
-			printf("Código de postal partido %d", aluno_x[i].morada.codigoPostal_);
+			//strcat(&DadosCod[1][0],&DadosCod[2][0]);
+			//val = atoi(&DadosCod[1][0]);
+			//strcpy(&aluno_x[i].morada.codigoPostal_, &val);
+			//printf("Código de postal partido %d", aluno_x[i].morada.codigoPostal_);
 			
-            /*printf("\nIntroduza a rua: ");
-            scanf(" %30[^\n]s", &aluno_x[i].morada.rua);
-            printf("\nIntroduza a porta: ");
-            scanf(" %30[^\n]s", &aluno_x[i].morada.porta);
-            printf("\nIntroduza a c?digo postal: ");
-            scanf(" %30[^\n]s", &aluno_x[i].morada.codigoPostal);
-            printf("\nIntroduza a localidade: ");
-            scanf(" %30[^\n]s", &aluno_x[i].morada.localidade);*/
-            
             printf("\nIntroduza a data de nascimento no seguinte formato (dd/mm/aaaa): ");
             scanf("%d/%d/%d",&aluno_x[i].dataNascimento.dd,&aluno_x[i].dataNascimento.mm,&aluno_x[i].dataNascimento.aaaa);
             printf("\nIntroduza o cartão de cidadão: ");
             scanf("%d", &aluno_x[i].ccAluno);
-            //tamanho[i] = strlen(aluno_x[i].ccAluno);
-            //printf("%d", tamanho[i]);
-            /*do{
-            	if (tamanho[i] != 8){
-           	 		printf("Introduza um número de cartão de cidadão válido: ");
-            		scanf("%d", &aluno_x[i].ccAluno);
-            		tamanho[i] = strlen(aluno_x[i].ccAluno);
-				}
-			}while(tamanho[i] != 8);*/
 			verificacaoCCAluno();
             printf("\nIntroduza o NIF: ");
             scanf("%d", &aluno_x[i].nif);
@@ -563,19 +515,19 @@ system("clear||cls"); //Copia da estrutura para o array dentro da funcao
 
 void DadosAlunos(){
 int i,j; 
-char cpostalAlunos[30][50], temp1[50]; 
-system("clear||cls"); //Copia da estrutura para o array dentro da funcao 
+	char CosPostalArray[30][50], temp[50]; 
+	system("clear||cls");  
 
 	for(i = 0; i < nFinalAlunos; i++){
-		strcpy(cpostalAlunos[i], aluno_x[i].morada.codigoPostal); 
+		strcpy(CosPostalArray[i], aluno_x[i].morada.codigoPostal); 
 	}
 	
 	for(i=0; i<nFinalAlunos-1;i++){ 
 		for(j=0;j<nFinalAlunos -i-1; j++){ 
-			if(strcmp(cpostalAlunos[j],cpostalAlunos[j+1])>0){
-				strcpy(temp1, cpostalAlunos[j]); 
-				strcpy(cpostalAlunos[j],cpostalAlunos[j+1]); 
-				strcpy(cpostalAlunos[j+1], temp1); 
+			if(strcmp(CosPostalArray[j],CosPostalArray[j+1])>0){
+				strcpy(temp, CosPostalArray[j]); 
+				strcpy(CosPostalArray[j],CosPostalArray[j+1]); 
+				strcpy(CosPostalArray[j+1], temp); 
 			}	
 		}	
 	}
@@ -583,8 +535,7 @@ system("clear||cls"); //Copia da estrutura para o array dentro da funcao
 printf("--------- LISTAGEM DE ALUNOS ---------\n\n");
 	for(i = 0; i<nFinalAlunos; i++){ 
 		for(j=0; j<nFinalAlunos;j++){ 
-			if (strcmp(aluno_x[j].morada.codigoPostal, cpostalAlunos[i]) == 0){
-				printf("\n\n\t %s - %s", cpostalAlunos[i], aluno_x[j].nomeAluno);
+			if (strcmp(aluno_x[j].morada.codigoPostal, CosPostalArray[i]) == 0){
 				printf("\n--------- ALUNO NÚMERO [ %d ] ---------\n", aluno_x[j].numAluno);
 		        //printf ("\nAluno: %d", aluno_x[i].numAluno);
 		        printf ("\nNome: %s", aluno_x[j].nomeAluno);
@@ -661,6 +612,64 @@ void DadosAlunosAlteracao(){
         printf("\nMorada: %s,%s,%s,%s",aluno_x[resConsult].morada.rua,aluno_x[resConsult].morada.porta,aluno_x[resConsult].morada.codigoPostal,aluno_x[resConsult].morada.localidade);
         printf("\n\n");
     
+}
+
+void listaMais18AnosAlunos(){	
+   int dia_atual;
+   int mes_atual;
+   int ano_atual;
+   int idade;
+    printf("indique o seu dia atual: ");
+    scanf("%d",&dia_atual);
+    printf("indique o seu mes atual: ");
+    scanf("%d",&mes_atual);
+    printf("indique o seu ano atual: ");
+    scanf("%d",&ano_atual);
+    printf("indique a idade que filtar a listagem: ");
+    scanf("%d",&idade);
+   age(dia_atual, mes_atual, ano_atual, idade);
+}
+
+void age(int dia_atual, int mes_atual, int ano_atual, int idade) {
+   int dia_cont[30], mes_cont[30], ano_cont[30], contagem = 0;
+   int diasDoMes[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+   for (i = 0; i < nFinalAlunos; i++){
+	   	dia_cont[i] = dia_atual - aluno_x[i].dataNascimento.dd;
+        mes_cont[i] = mes_atual - aluno_x[i].dataNascimento.mm;
+        ano_cont[i] = ano_atual - aluno_x[i].dataNascimento.aaaa;
+            if(ano_cont[i] >= idade){
+                contagem=1;
+                printf("--------- ALUNO NÚMERO [ %d ] ---------\n", aluno_x[i].numAluno);
+                //printf ("\nAluno: %d", aluno_x[i].numAluno);
+                printf ("\nNome: %s", aluno_x[i].nomeAluno);
+                printf ("\nData Nascimento: %d/%d/%d", aluno_x[i].dataNascimento.dd, aluno_x[i].dataNascimento.mm, aluno_x[i].dataNascimento.aaaa);
+                printf ("\nCartão De Cidadão: %d", aluno_x[i].ccAluno);
+                printf ("\nNif: %d", aluno_x[i].nif);
+                if (aluno_x[i].numeroCarta == 0){
+                    printf ("\nData Conclusão: Não data de Conclusão");
+                }else{
+                    printf ("\nData Conclusão: %d/%d/%d", aluno_x[i].dataConclusao.dd, aluno_x[i].dataConclusao.mm, aluno_x[i].dataConclusao.aaaa);
+                }
+
+                if (aluno_x[i].numeroCarta == 0){
+                    printf ("\nNúmero Carta: Não existe número de carta");
+                }else{
+                    printf ("\nNúmero Carta: %d", aluno_x[i].numeroCarta);
+                }
+
+                if (aluno_x[i].ativoAluno == 1){
+                    printf ("\nAtivo: Aluno Ativo");
+                }else{
+                    printf("\nAtivo: Aluno Não Ativo");
+                }
+                printf("\nMorada: %s,%s,%s,%s",aluno_x[i].morada.rua,aluno_x[i].morada.porta,aluno_x[i].morada.codigoPostal,aluno_x[i].morada.localidade);
+                printf("\n\n");
+            }
+            }
+    if(contagem == 0){
+        printf("Nenhum aluno encontrado com %d anos de ou idade superior\n", idade);
+        printf(" %d\n", ano_cont[i]);
+    }
 }
 
 
@@ -821,10 +830,10 @@ void alterarAluno(){
                 scanf(" %30[^\n]s", moradaSplit);
                 size_t final = divMoradaAluno (moradaSplit, dividirMorada);
 
-                strcpy(&aluno_x[alunoEcontrado].morada.rua, &DadosMorada[1][0]);		//copia a 1 parcela do array para o vetor rua 
-                strcpy(&aluno_x[alunoEcontrado].morada.porta, &DadosMorada[2][0]);		//copia a 2 parcela do array para o vetor porta 
-                strcpy(&aluno_x[alunoEcontrado].morada.codigoPostal, &DadosMorada[3][0]);	//copia a 3 parcela do array para o vetor codigoPostal 
-                strcpy(&aluno_x[alunoEcontrado].morada.localidade, &DadosMorada[4][0]);	//copia a 4 parcela do array para o vetor localidade 
+                strcpy(aluno_x[alunoEcontrado].morada.rua, &DadosMorada[1][0]);		//copia a 1 parcela do array para o vetor rua 
+                strcpy(aluno_x[alunoEcontrado].morada.porta, &DadosMorada[2][0]);		//copia a 2 parcela do array para o vetor porta 
+                strcpy(aluno_x[alunoEcontrado].morada.codigoPostal, &DadosMorada[3][0]);	//copia a 3 parcela do array para o vetor codigoPostal 
+                strcpy(aluno_x[alunoEcontrado].morada.localidade, &DadosMorada[4][0]);	//copia a 4 parcela do array para o vetor localidade 
                 limpaEcra();
             break;
         }
@@ -927,10 +936,10 @@ void alterarAlunoNome(){
                 scanf(" %30[^\n]s", moradaSplit);
                 size_t final = divMoradaAluno (moradaSplit, dividirMorada);
 
-                strcpy(&aluno_x[alunoEcontrado].morada.rua, &DadosMorada[1][0]);		//copia a 1 parcela do array para o vetor rua 
-                strcpy(&aluno_x[alunoEcontrado].morada.porta, &DadosMorada[2][0]);		//copia a 2 parcela do array para o vetor porta 
-                strcpy(&aluno_x[alunoEcontrado].morada.codigoPostal, &DadosMorada[3][0]);	//copia a 3 parcela do array para o vetor codigoPostal 
-                strcpy(&aluno_x[alunoEcontrado].morada.localidade, &DadosMorada[4][0]);	//copia a 4 parcela do array para o vetor localidade 
+                strcpy(aluno_x[alunoEcontrado].morada.rua, &DadosMorada[1][0]);		//copia a 1 parcela do array para o vetor rua 
+                strcpy(aluno_x[alunoEcontrado].morada.porta, &DadosMorada[2][0]);		//copia a 2 parcela do array para o vetor porta 
+                strcpy(aluno_x[alunoEcontrado].morada.codigoPostal, &DadosMorada[3][0]);	//copia a 3 parcela do array para o vetor codigoPostal 
+                strcpy(aluno_x[alunoEcontrado].morada.localidade, &DadosMorada[4][0]);	//copia a 4 parcela do array para o vetor localidade 
                 limpaEcra();
             break;
         }
@@ -944,7 +953,6 @@ void alterarInstrutor(){
     int instrutorEcontrado, respostaAlterarInstrutor, numInstrutor;
     int flgInstrutor = 0;
     DadosInstrutores();
-    
     printf("\nIntroduza o número do aluno que pretende alterar: ");
     scanf("%d", &numInstrutor);
     limpaEcra();
@@ -1057,13 +1065,39 @@ void alterarInstrutorNome(){
 }
 
 void verificacaoCCAluno(){
-    do{
+	char snum[20];
+	int val;
+	int tamanho[20];
+	itoa(aluno_x[i].ccAluno, snum, 10);
+        tamanho[i] = strlen(snum);
+        printf("%d", tamanho[i]);
+        if (tamanho[i] != 8){
+        	do{
+       	 		printf("Introduza um número de cartão de cidadão válido: ");
+        		scanf("%s", &snum);
+        		tamanho[i] = strlen(snum);
+			}while(tamanho[i] != 8);
+			val = atoi(snum);
+			aluno_x[i].ccAluno = val;
+		}
+	do{
     	for(j = 0; j < nFinalAlunos; j++){
         	while (aluno_x[i].ccAluno == aluno_x[j].ccAluno && i != j){
             	printf("\nJá existe um aluno com o número cartão de cidadão introduzido! \nInsira outro número cartão de cidadão: ");
                 scanf("%d", &aluno_x[i].ccAluno);
             	j = 0;
-        	}
+        		itoa(aluno_x[i].ccAluno, snum, 10);
+        		tamanho[i] = strlen(snum);
+    			if(tamanho[i] != 8){
+    				do{
+       	 				printf("Introduza um número de cartão de cidadão válido: ");
+        				scanf("%s", &snum);
+        				tamanho[i] = strlen(snum);
+					}while(tamanho[i] != 8);
+					val = atoi(snum);
+					aluno_x[i].ccAluno = val;
+       			}
+    		}
     	}
     }while(j < nFinalAlunos);
 }
@@ -1108,7 +1142,7 @@ void verificacaoCartaConducaoAluno(){
     do{
     	for(j = 0; j < nFinalAlunos; j++){
         	while (aluno_x[i].numeroCarta == aluno_x[j].numeroCarta && i != j){
-            	printf("\já existe um aluno com o número de carta de condução introduzido! \nInsira outro número de carta de condução: ");
+            	printf("\njá existe um aluno com o número de carta de condução introduzido! \nInsira outro número de carta de condução: ");
             	scanf("%d", &aluno_x[i].numeroCarta);
             	j = 0;
        	 	}
@@ -1118,26 +1152,26 @@ void verificacaoCartaConducaoAluno(){
 
 void listaAtivosAlunos(){
 	int i,j; 
-	char cpostalAlunos[30][50], temp1[50]; 
+	char CosPostalArray[30][50], temp[50]; 
 	system("clear||cls"); //Copia da estrutura para o array dentro da funcao 
 
 	for(i = 0; i < nFinalAlunos; i++){
-		strcpy(cpostalAlunos[i], aluno_x[i].morada.codigoPostal); 
+		strcpy(CosPostalArray[i], aluno_x[i].morada.codigoPostal); 
 	}
 	
 	for(i=0; i<nFinalAlunos-1;i++){ 
 		for(j=0;j<nFinalAlunos -i-1; j++){ 
-			if(strcmp(cpostalAlunos[j],cpostalAlunos[j+1])>0){
-				strcpy(temp1, cpostalAlunos[j]); 
-				strcpy(cpostalAlunos[j],cpostalAlunos[j+1]); 
-				strcpy(cpostalAlunos[j+1], temp1); 
+			if(strcmp(CosPostalArray[j],CosPostalArray[j+1])>0){
+				strcpy(temp, CosPostalArray[j]); 
+				strcpy(CosPostalArray[j],CosPostalArray[j+1]); 
+				strcpy(CosPostalArray[j+1], temp); 
 			}	
 		}	
 	}
 	printf("--------- LISTAGEM DE ALUNOS ATIVOS ---------\n\n");
 	for(i = 0; i < nFinalAlunos; i++){
 		for(j=0;j<nFinalAlunos;j++){
-			if (strcmp(aluno_x[j].morada.codigoPostal, cpostalAlunos[i]) == 0 && aluno_x[j].ativoAluno == 1){
+			if (strcmp(aluno_x[j].morada.codigoPostal, CosPostalArray[i]) == 0 && aluno_x[j].ativoAluno == 1){
 				printf("--------- ALUNO NÚMERO [ %d ] ---------\n", aluno_x[j].numAluno);
 		        //printf ("\nAluno: %d", aluno_x[i].numAluno);
 		        printf ("\nNome: %s", aluno_x[j].nomeAluno);
@@ -1160,26 +1194,26 @@ void listaAtivosAlunos(){
 
 void listaCartaConducaoAlunos(){
 	int i,j; 
-	char cpostalAlunos[30][50], temp1[50]; 
+	char CosPostalArray[30][50], temp[50]; 
 	system("clear||cls"); //Copia da estrutura para o array dentro da funcao 
 
 	for(i = 0; i < nFinalAlunos; i++){
-		strcpy(cpostalAlunos[i], aluno_x[i].morada.codigoPostal); 
+		strcpy(CosPostalArray[i], aluno_x[i].morada.codigoPostal); 
 	}
 	
 	for(i=0; i<nFinalAlunos-1;i++){ 
 		for(j=0;j<nFinalAlunos -i-1; j++){ 
-			if(strcmp(cpostalAlunos[j],cpostalAlunos[j+1])>0){
-				strcpy(temp1, cpostalAlunos[j]); 
-				strcpy(cpostalAlunos[j],cpostalAlunos[j+1]); 
-				strcpy(cpostalAlunos[j+1], temp1); 
+			if(strcmp(CosPostalArray[j],CosPostalArray[j+1])>0){
+				strcpy(temp, CosPostalArray[j]); 
+				strcpy(CosPostalArray[j],CosPostalArray[j+1]); 
+				strcpy(CosPostalArray[j+1], temp); 
 			}	
 		}	
 	}
 	printf("--------- LISTAGEM DE ALUNOS COM CARTA DE CONDUÇÃO ---------\n\n");
 	for(i = 0; i < nFinalAlunos; i++){
 		for(j=0;j<nFinalAlunos;j++){
-			if (strcmp(aluno_x[j].morada.codigoPostal, cpostalAlunos[i]) == 0 && aluno_x[j].numeroCarta != 0){
+			if (strcmp(aluno_x[j].morada.codigoPostal, CosPostalArray[i]) == 0 && aluno_x[j].numeroCarta != 0){
 				printf("--------- ALUNO NÚMERO [ %d ] ---------\n", aluno_x[j].numAluno);
 		        //printf ("\nAluno: %d", aluno_x[i].numAluno);
 		        printf ("\nNome: %s", aluno_x[j].nomeAluno);
@@ -1273,10 +1307,12 @@ void listarPorNomeInstrutor(){
     limpaEcra();
     printf ("\nInsira o nome do aluno que pretende consultar: ");
     scanf (" %20[^\n]s", &nome);
+    
     if(strlen(nome) < 2) 
 		do{
         	printf("\nPor favor insira pelo menos 2 caracteres para procurar pelo nome: ");
         	scanf (" %20[^\n]s", &nome);
+        	fflush(stdin);
     	}while(strlen(nome) < 2);
     limpaEcra();
     for(i = 0; i < nFinalInstrutores; i++){
@@ -1302,7 +1338,7 @@ void listarPorNomeInstrutor(){
         if(resConsult != 0){
         	resConsult = resConsult-1; 
             DadosInstrutoresAlteracao(); //posição do aluno no array
-            printf("\nPretende alterar este aluno?\n1 - (Sim)\n0 - Não\nResposta: ");
+            printf("\nPretende alterar este aluno?\n1 - Sim\n0 - Não\nResposta: ");
             scanf("%d", &resAltera);
             if(resAltera == 1){
                 alterarInstrutorNome();
@@ -1328,13 +1364,11 @@ nAulas++;
 printf("--------- MARCAÇÃO DE UMA AULA ---------\n\n");
 	for (i =0; i < nAulas; i++){
 		printf("Introduza a hora da aula: ");
-		scanf("%d",&data_aula[i].hora);
+		scanf("%d",&aulas[i].data_aula.hora);
 		printf("Introduza a data da aula: ");
-		scanf("%d/%d/%d",&data_aula[i].dd, &data_aula[i].dd, &data_aula[i].aaaa);
+		scanf("%d/%d/%d",&aulas[i].data_aula.dd, &aulas[i].data_aula.dd, &aulas[i].data_aula.aaaa);
 	}
-//IDEIA: LIMPAR A VARIAVEL
-//IDEIA: IMPLEMENTAR COM SPLIT.   EX: 19H, 11/09/2020
-listaAtivosAlunos(); 	//tenho algo pensado melhor mas para testes chega 
+listaAtivosAlunos(); 	
 printf("\nIntroduza o número do aluno para marcar a aula: ");
 scanf("%d", &aulas[nAulas].aluno);
 	for (i = 0; i < nFinalAlunos; i++){
@@ -1357,7 +1391,7 @@ scanf("%d", &aulas[nAulas].instrutor);
 	}  
 limpaEcra();
 	for (i =0; i < nAulas; i++){
-		printf("AULA %d\nData: %d/%d/%d\nHora: %d", nAulas, data_aula[i].dd, data_aula[i].mm, data_aula[i].aaaa, data_aula[i].hora);
+		printf("AULA %d\nData: %d/%d/%d\nHora: %d", nAulas, aulas[i].data_aula.dd,aulas[i].data_aula.mm, aulas[i].data_aula.aaaa, aulas[i].data_aula.hora);
 	}
 	for (i = 0; i < nFinalAlunos; i++){
 			if(aluno_x[i].ativoAluno == 1 && aluno_x[i].numAluno == aulas[nAulas].aluno){
@@ -1369,7 +1403,7 @@ limpaEcra();
 			printf("\nInstrutor: %s - %d", instrutores_x[i].nomeInstrutor, instrutores_x[i].numInstrutor);
 		}
 	}
-printf("\nTem a certeza que pretende marcar esta aula? (Esta marcação não poderá ser eliminada depois de aceite!)\nSim - 1\nNão - 2");
+printf("\nTem a certeza que pretende marcar esta aula? (Esta marcação não poderá ser eliminada depois de aceite!)\nSim - 1\nNão - 2\nResposta: ");
 scanf("%d", &resMarc);
 	if (resMarc == 1){
 		limpaEcra();
@@ -1382,101 +1416,108 @@ scanf("%d", &resMarc);
 		sleep(3);
 	}
 }
-
-void listarMarcacao(){
-	for (i = 0; i < nAulas; i++){
-		printf("--------- LISTAGEM DE MARCAÇÕES ---------\n");
-		printf("--------- AULA NÚMERO [ %d ] ---------\n", nAulas);
-		for (j = 0; j < nFinalAlunos; j++){
-			if(aluno_x[j].ativoAluno == 1 && aluno_x[j].numAluno == aulas[i].aluno){
-				printf("\nEscolheu o aluno %s com o número %d", aluno_x[j].nomeAluno, aluno_x[j].numAluno);
-			}
-		}
-		for (j = 0; j < nFinalInstrutores; j++){
-			if(instrutores_x[j].ativoInstrutor == 1 && instrutores_x[j].numInstrutor == aulas[i].instrutor){
-				printf("\nEscolheu o instrutor %s com o número %d", instrutores_x[j].nomeInstrutor, instrutores_x[j].numInstrutor);
-			}
-		}
-	//	printf("\nData: %d/%d/%d\nHora: %d", data_aula[i].dd, data_aula[i].mm, data_aula[i].aaaa, data_aula[i].hora);	 
+/*int dataValida(int dia, int mes, int ano){
+	time_t t = time(NULL);
+	struct tm tm = *localtime(&t);
+	if (ano > (tm.tm_year + 1900) || ano < 1900){
+		return 0;
 	}
-}
+	if (mes < 1 || mes > 12){
+		return 0;
+	}
+	if (dia < 1 || dia > 31){
+		return 0;
+	}	
+	return 1;
+}*/
 
 void listarMarcacaoDia(){
-/*  int dia,mes,ano; 
-  printf("Introduza o dia que quer fazer a listagem das aulas. (Insira a dara no seguinte formato (dd/mm/aaaa): ");
-  scanf("%d/%d/%d",&dia, &mes, &ano);
-  for (i =0; i < nAulas;i++){
-  	if(ano == && mes == && dia == dia do array){
-  		printf("--------- LISTAGEM DE MARCAÇÕES POR DIA ---------");
-		printf("--------- AULA NÚMERO [ %d ] ---------\n", nAulas);
-  		printf("\nData: %d/%d/%d\nHora: %d", data_aula.dd, data_aula.mm, data_aula.aaaa, data_aula.hora);
-  		printf("");
-  	}
-  }
- */ 
+/*int i, j, L, op, flag = 0, dia, mes, ano;
+char op2, msg[100]; 
+system("clear||cls");
+printf("\n\n\tInsira a data da aula que pretende consultar (dia/mês/ano): "); 
+scanf("%d/%d/%d",&dia, &mes, &ano); 
+if(dataValida (dia, mes, ano) != 1){
+	do{
+		printf("\n\n\tPor favor insira a data da aula válida (dia/mês/ano): "); 
+		scanf("%d/%d/%d", &dia, &mes, &ano);
+		fflush(stdin); 
+	}while(dataValida(dia, mes, ano) != 1);
 }
 
+limpaEcra(); 
+	for(i = 0; i < nAulas; i++){ 
+		if(aulas[i].data_aula.dd == dia && aulas[i].data_aula.mm == mes && aulas[i].data_aula.aaaa == ano){
+			flag = 1;
+			break;
+		}
+	}
+	
+	if(flag == 1){
+		printf("--------- LISTAGEM DE AULAS EM %d/%d/%d ---------\n\n", dia, mes, ano);
+		for(i = 0; i < nAulas; i++){ 
+			if(aulas[i].data_aula.dd == dia && aulas[i].data_aula.mm == mes && aulas[i].data_aula.aaaa == ano){
+				printf ("\n\n\tAula - Data:%d/%d/%d - Hora:%d", dia, mes, ano, aulas[i].hora -);
+			}
+
+			for(j = 0; j < nFinalAlunos; j++){ 
+				if(aulas[i].data_aula.dd == dia && aulas[i].data_aula.mm == mes && aulas[i].data_aula.aaaa == ano && aulas[i].aluno == aluno_x[j].numAluno){
+					printf (" Alunos:%d, %s", aluno_x[j].numAluno, aluno_x[j].nomeAluno -);
+				}
+			}
+			
+			for(l = 0; l < nInstrutores; l++){
+				if(aulas[i].data_aula.dd == dia && aulas[i].data_aula.mm == mes && aulas[i].data_aula.aaaa == ano && aulas[i].instrutor == instrutores_x[l].numInstrutor) {
+					printf(" Instrutor:%s, %s", instrutores_x[l].nomeInstrutor, instrutores_x[l].emailInstrutor);
+				}
+			}
+		}
+	}else{
+		limpaEcra();
+		printf("Nenhuma aula aula encontrada com essa data! A redirecionar..");
+	}
+*/}
+
 void listarMarcacaoAluno(){
-  printf("");
+int flag = 0;
+int aluno, k, i, j, l;
+listaAtivosAlunos(); 	//tenho algo pensado melhor mas para testes chega 
+printf("\nIntroduza o número do aluno para consultar a aula: ");
+scanf("%d", &aluno);
+for(l = 0; l < nAulas; l++){
+  	for (i = 0; i < nFinalAlunos; i++){
+		if(aluno_x[i].ativoAluno == 1 && aulas[l].aluno == aluno && aulas[l].aluno == aluno_x[i].numAluno){
+			flag = 1;
+			break;
+		}
+	}  
+}
+
+	if(flag == 1){
+		//printf("--------- MARCAÇÃO DE UMA AULA ---------\n\n");
+		printf("\n\nListagem de aulas do aluno número %d> > >", aluno);
+		for(i = 0; i < nAulas; i++){ 
+			if(aluno_x[i].ativoAluno == 1 && aulas[l].aluno == aluno && aulas[l].aluno == aluno_x[i].numAluno){
+				printf ("\n\n\tAula - Data:%d/%d/%d - Hora:%d", aulas[i].data_aula.dd, aulas[i].data_aula.mm, aulas[i].data_aula.aaaa, aulas[i].hora);
+			}
+
+			for(j = 0; j < nFinalAlunos; j++){ 
+				if(aluno_x[i].ativoAluno == 1 && aulas[l].aluno == aluno && aulas[l].aluno == aluno_x[i].numAluno){
+					printf (" - Aluno:%d, %s", aluno_x[j].numAluno, aluno_x[j].nomeAluno);
+				}
+			}
+			
+			for(k = 0; k < nInstrutores; k++){
+				if(aluno_x[i].ativoAluno == 1 && aulas[l].aluno == aluno && aulas[l].aluno == aluno_x[i].numAluno){
+					printf(" - Instrutor:%s, %s", instrutores_x[k].nomeInstrutor, instrutores_x[k].emailInstrutor);
+				}
+			}
+		}
+	}else{
+		limpaEcra();
+		printf("Nenhum aluno encontrado com esse número! A redirecionar..");
+	}
 }
 void listarMarcacaoInstrutor(){
   printf("");
-}
-
-void listaMais18AnosAlunos(){	
-   int dia_atual;
-   int mes_atual;
-   int ano_atual;
-   int idade;
-    printf("indique o seu dia atual: ");
-    scanf("%d",&dia_atual);
-    printf("indique o seu mes atual: ");
-    scanf("%d",&mes_atual);
-    printf("indique o seu ano atual: ");
-    scanf("%d",&ano_atual);
-    printf("indique a idade que filtar a listagem: ");
-    scanf("%d",&idade);
-   age(dia_atual, mes_atual, ano_atual, idade);
-}
-
-void age(int dia_atual, int mes_atual, int ano_atual, int idade) {
-   int dia_cont[30], mes_cont[30], ano_cont[30], contagem = 0;
-   int diasDoMes[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-   for (i = 0; i < nFinalAlunos; i++){
-	   	dia_cont[i] = dia_atual - aluno_x[i].dataNascimento.dd;
-        mes_cont[i] = mes_atual - aluno_x[i].dataNascimento.mm;
-        ano_cont[i] = ano_atual - aluno_x[i].dataNascimento.aaaa;
-            if(ano_cont[i] >= idade){
-                contagem=1;
-                printf("--------- ALUNO NÚMERO [ %d ] ---------\n", aluno_x[i].numAluno);
-                //printf ("\nAluno: %d", aluno_x[i].numAluno);
-                printf ("\nNome: %s", aluno_x[i].nomeAluno);
-                printf ("\nData Nascimento: %d/%d/%d", aluno_x[i].dataNascimento.dd, aluno_x[i].dataNascimento.mm, aluno_x[i].dataNascimento.aaaa);
-                printf ("\nCartão De Cidadão: %d", aluno_x[i].ccAluno);
-                printf ("\nNif: %d", aluno_x[i].nif);
-                if (aluno_x[i].numeroCarta == 0){
-                    printf ("\nData Conclusão: Não data de Conclusão");
-                }else{
-                    printf ("\nData Conclusão: %d/%d/%d", aluno_x[i].dataConclusao.dd, aluno_x[i].dataConclusao.mm, aluno_x[i].dataConclusao.aaaa);
-                }
-
-                if (aluno_x[i].numeroCarta == 0){
-                    printf ("\nNúmero Carta: Não existe número de carta");
-                }else{
-                    printf ("\nNúmero Carta: %d", aluno_x[i].numeroCarta);
-                }
-
-                if (aluno_x[i].ativoAluno == 1){
-                    printf ("\nAtivo: Aluno Ativo");
-                }else{
-                    printf("\nAtivo: Aluno Não Ativo");
-                }
-                printf("\nMorada: %s,%s,%s,%s",aluno_x[i].morada.rua,aluno_x[i].morada.porta,aluno_x[i].morada.codigoPostal,aluno_x[i].morada.localidade);
-                printf("\n\n");
-            }
-            }
-    if(contagem == 0){
-        printf("Nenhum aluno encontrado com %d anos de ou idade superior\n", idade);
-        printf(" %d\n", ano_cont[i]);
-    }
 }
